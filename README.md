@@ -77,8 +77,8 @@ semops-data [PRODUCT]  ← This repo
 
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Architecture and ownership
 - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) - Development environment and usage
-- [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) - Service dependencies
-- [docs/decisions/](docs/decisions/) - Architecture Decision Records
+- [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) - Service dependencies and DevContainer
+- [docs/RUNBOOK.md](docs/RUNBOOK.md) - Operational procedures
 
 ## Related Repositories
 
