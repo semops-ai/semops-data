@@ -3,111 +3,104 @@ requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "data-systems-toolkit"
+name = "semops-data"
 description = "Toolkit for simulating and understanding enterprise data architectures with synthetic data, lineage tracking, and stack simulation"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
-    {name = "Tim Mitchell"},
+ {name = "Tim Mitchell"},
 ]
 keywords = [
-    "data-systems",
-    "synthetic-data",
-    "data-lineage",
-    "data-simulation",
-    "analytics",
-    "dbt",
-    "data-profiling"
+ "data-systems",
+ "synthetic-data",
+ "data-lineage",
+ "data-simulation",
+ "analytics",
+ "dbt",
+ "semops-dataofiling"
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Topic :: Scientific/Engineering",
-    "Topic :: Database",
+ "Development Status :: 3 - Alpha",
+ "Intended Audience :: Developers",
+ "Intended Audience :: Science/Research",
+ "License :: OSI Approved :: MIT License",
+ "Programming Language :: Python :: 3.10",
+ "Programming Language :: Python :: 3.11",
+ "Programming Language :: Python :: 3.12",
+ "Topic :: Scientific/Engineering",
+ "Topic :: Database",
 ]
 dynamic = ["version"]
 
 dependencies = [
-    # Core data science
-    "numpy>=1.24.0",
-    "pandas>=2.0.0",
-    "pyarrow>=12.0.0",
+ # Core data science
+ "numpy>=1.24.0",
+ "pandas>=2.0.0",
+ "pyarrow>=12.0.0",
 
-    # Synthetic data generation
-    "sdv>=1.9.0",
-    "faker>=19.0.0",
+ # Synthetic data generation
+ "sdv>=1.9.0",
+ "faker>=19.0.0",
 
-    # Data profiling
-    "ydata-profiling>=4.0.0",
-    "great-expectations>=0.17.0",
+ # Data profiling
+ "ysemops-dataofiling>=4.0.0",
+ "great-expectations>=0.17.0",
 
-    # Database
-    "duckdb>=0.8.0",
-    "sqlalchemy>=2.0.0",
+ # Database
+ "duckdb>=0.8.0",
+ "sqlalchemy>=2.0.0",
 
-    # Configuration and utilities
-    "python-dotenv>=1.0.0",
-    "pyyaml>=6.0.1",
-    "loguru>=0.7.0",
-    "click>=8.1.0",
-    "tqdm>=4.65.0",
-    "pydantic>=2.0.0",
+ # Configuration and utilities
+ "python-dotenv>=1.0.0",
+ "pyyaml>=6.0.1",
+ "loguru>=0.7.0",
+ "click>=8.1.0",
+ "tqdm>=4.65.0",
+ "pydantic>=2.0.0",
 ]
 
 [project.optional-dependencies]
 lineage = [
-    "openlineage-python>=1.0.0",
-    "marquez-python>=0.40.0",
+ "openlineage-python>=1.0.0",
+ "marquez-python>=0.40.0",
 ]
 dbt = [
-    "dbt-core>=1.7.0",
-    "dbt-duckdb>=1.7.0",
+ "dbt-core>=1.7.0",
+ "dbt-duckdb>=1.7.0",
 ]
 dev = [
-    "pytest>=7.4.0",
-    "pytest-cov>=4.1.0",
-    "black>=23.7.0",
-    "ruff>=0.0.284",
-    "mypy>=1.5.0",
-    "pre-commit>=3.3.0",
+ "pytest>=7.4.0",
+ "pytest-cov>=4.1.0",
+ "black>=23.7.0",
+ "ruff>=0.0.284",
+ "mypy>=1.5.0",
+ "pre-commit>=3.3.0",
 ]
 notebooks = [
-    "jupyter>=1.0.0",
-    "jupyterlab>=4.0.0",
-    "matplotlib>=3.7.0",
-    "seaborn>=0.12.0",
-    "plotly>=5.15.0",
-    "ipywidgets>=8.0.0",
+ "jupyter>=1.0.0",
+ "jupyterlab>=4.0.0",
+ "matplotlib>=3.7.0",
+ "seaborn>=0.12.0",
+ "plotly>=5.15.0",
+ "ipywidgets>=8.0.0",
 ]
 mlops = [
-    "mlflow>=2.10.0",
-    "datasets>=2.16.0",  # HuggingFace datasets
-]
-research = [
-    "anthropic>=0.40.0",
-    "qdrant-client>=1.7.0",
-    "requests>=2.31.0",
-    "crawl4ai>=0.4.0",
-    "scikit-learn>=1.3.0",  # For clustering in synthesize
+ "mlflow>=2.10.0",
+ "datasets>=2.16.0", # HuggingFace datasets
 ]
 coherence = [
-    "transformers>=4.30.0",
-    "sentence-transformers>=2.2.0",
-    "anthropic>=0.40.0",
-    "torch>=2.2.0",
+ "transformers>=4.30.0",
+ "sentence-transformers>=2.2.0",
+ "anthropic>=0.40.0",
+ "torch>=2.2.0",
 ]
 gpu = [
-    "torch>=2.2.0",
-    "torchvision>=0.17.0",
+ "torch>=2.2.0",
+ "torchvision>=0.17.0",
 ]
 all = [
-    "data-systems-toolkit[lineage,dbt,dev,notebooks,mlops,research]",
+ "semops-data[lineage,dbt,dev,notebooks,mlops]",
 ]
 
 [project.urls]
@@ -134,16 +127,16 @@ target-version = ['py310']
 target-version = "py310"
 line-length = 88
 select = [
-    "E",  # pycodestyle errors
-    "W",  # pycodestyle warnings
-    "F",  # pyflakes
-    "I",  # isort
-    "B",  # flake8-bugbear
-    "C4", # flake8-comprehensions
-    "UP", # pyupgrade
+ "E", # pycodestyle errors
+ "W", # pycodestyle warnings
+ "F", # pyflakes
+ "I", # isort
+ "B", # flake8-bugbear
+ "C4", # flake8-comprehensions
+ "UP", # pyupgrade
 ]
 ignore = [
-    "E501",  # line too long, handled by black
+ "E501", # line too long, handled by black
 ]
 
 [tool.mypy]

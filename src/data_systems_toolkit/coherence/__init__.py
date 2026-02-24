@@ -8,8 +8,8 @@ from .models import CoherenceScore, Pattern
 from .score import score_batch, score_pattern
 
 __all__ = [
-    "score_pattern",
-    "score_batch",
-    "Pattern",
-    "CoherenceScore",
+ "score_pattern",
+ "score_batch",
+ "Pattern",
+ "CoherenceScore",
 ]

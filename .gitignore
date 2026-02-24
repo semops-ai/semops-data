@@ -19,18 +19,12 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-venv/
-venv_linux/
+
+# Virtual environments
 .venv/
-
-# Jupyter
-.ipynb_checkpoints/
-*.ipynb_checkpoints
-
-# Environment
-.env
-.env.local
-.env.*.local
+venv/
+ENV/
+env/
 
 # IDE
 .idea/
@@ -39,22 +33,52 @@ venv_linux/
 *.swo
 *~
 
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Environment
+.env
+.env.local
+
+# Data files (keep samples, ignore generated)
+/data/*
+!/data/.gitkeep
+*.duckdb
+*.duckdb.wal
+*.parquet
+!samples/**/*.parquet
+!samples/**/*.json
+!samples/**/*.csv
+
+# MLflow tracking
+/mlruns/*
+!/mlruns/.gitkeep
+/mlartifacts/
+
+# Reports and outputs
+/reports/
+/output/
+*.html
+!docs/**/*.html
+
+# Models and artifacts
+/models/
+*.pkl
+*.joblib
+
+# Logs
+*.log
+logs/
+
 # OS
 .DS_Store
 Thumbs.db
 
-# Testing
-.coverage
-htmlcov/
-.pytest_cache/
-.tox/
+# Docker
+.docker/
 
-# Build
-*.log
-
-# Data files (large)
-*.csv
-*.parquet
-*.pkl
-data/raw/
-data/processed/
+# dbt
+dbt_packages/
+target/
+logs/

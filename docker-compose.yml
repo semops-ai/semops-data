@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+ # Main Python development environment
+ python:
+ build:
+ context: .
+ dockerfile: Dockerfile
+ volumes:
+ - .:/workspace
+ - dst-data:/data
+ environment:
+ - PYTHONPATH=/workspace/src
+ working_dir: /workspace
+ command: sleep infinity
+ networks:
+ - dst-network
+
+ # DuckDB is embedded, but we use this for dbt
+ dbt:
+ build:
+ context: .
+ dockerfile: Dockerfile
+ volumes:
+ - .:/workspace
+ - dst-data:/data
+ environment:
+ - PYTHONPATH=/workspace/src
+ - DBT_PROFILES_DIR=/workspace/dbt
+ working_dir: /workspace
+ command: sleep infinity
+ networks:
+ - dst-network
+
+ # Marquez for lineage visualization (optional, start when needed)
+ marquez:
+ image: marquezproject/marquez:latest
+ ports:
+ - "5000:5000" # API
+ - "5002:5001" # Admin (remapped from 5001 to avoid Docling conflict)
+ environment:
+ - MARQUEZ_CONFIG=/etc/marquez/config.yml
+ volumes:
+ - marquez-data:/var/lib/marquez
+ networks:
+ - dst-network
+ profiles:
+ - lineage
+
+ marquez-web:
+ image: marquezproject/marquez-web:latest
+ ports:
+ - "3005:3000" # Remapped from 3000 to avoid multi-repo conflict
+ environment:
+ - MARQUEZ_HOST=marquez
+ - MARQUEZ_PORT=5000
+ depends_on:
+ - marquez
+ networks:
+ - dst-network
+ profiles:
+ - lineage
+
+ # Jupyter for notebooks (optional)
+ jupyter:
+ build:
+ context: .
+ dockerfile: Dockerfile
+ ports:
+ - "8888:8888"
+ volumes:
+ - .:/workspace
+ - dst-data:/data
+ environment:
+ - PYTHONPATH=/workspace/src
+ - JUPYTER_TOKEN=${JUPYTER_TOKEN:-datasystems}
+ working_dir: /workspace
+ command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+ networks:
+ - dst-network
+ profiles:
+ - notebooks
+
+volumes:
+ dst-data:
+ name: dst-data
+ marquez-data:
+ name: marquez-data
+
+networks:
+ dst-network:
+ name: dst-network

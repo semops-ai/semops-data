@@ -4,85 +4,56 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Role in Global Architecture
 
-**Role:** Product (First publishable product)
+**Bounded Context:** Data Platform
 
-```
-semops-data [PRODUCT]
-        │
-        ├── Owns: Data utilities, Research RAG pipeline
-        │   - Data engineering utilities
-        │   - Research synthesis module
-        │   - Jupyter notebooks
-        │
-        └── Depends on: semops-core [INFRASTRUCTURE]
-            - Qdrant (vector storage)
-            - Ollama (embeddings)
-            - Docling (document processing)
-```
-
-**Key Insight:** This repo is designed for external users - clear documentation and standalone operation are priorities.
-
-## Project Structure
-
-```
-semops-data/
-├── research/              # Research RAG module
-│   ├── ingest.py         # Web/PDF ingestion
-│   ├── embed.py          # Embedding generation
-│   ├── cluster.py        # K-means clustering
-│   ├── synthesize.py     # LLM meta-analysis
-│   └── cli.py            # CLI interface
-├── src/                   # Data engineering utilities
-├── notebooks/             # Jupyter notebooks
-├── sources/               # Research source manifests
-└── docs/                  # Documentation
+```text
+semops-dx-orchestrator [PLATFORM/DX]
+ │
+ └── semops-core [ORCHESTRATOR]
+ │
+ └── semops-data [DATA PLATFORM] ◄── YOU ARE HERE
+ │
+ ├── Owns: Data utilities and analytics
+ │ - Coherence scoring experiments
+ │ - Synthetic data generation
+ │ - Stack simulation (S3 → Delta Lake → Snowflake)
+ │ - Data profiling and lineage tools
+ │
+ └── Uses: Infrastructure from semops-core
+ - Qdrant, Docling, PostgreSQL
 ```
 
-## Research Module
+**Key Ownership Boundary:**
 
-The research module implements RAPTOR-inspired corpus analysis:
+- This repo owns **data utilities** - coherence scoring, synthetic data, stack simulation, profiling, lineage
+- Research RAG and data due diligence extracted to `semops-research` (see #50)
+- `semops-core` owns **infrastructure** - Qdrant, Docling, PostgreSQL, schema
 
-```bash
-# Ingest sources
-python -m research.cli ingest sources/manifest.json
+**Global Docs Location:** `
 
-# Generate embeddings
-python -m research.cli embed
+## Session Notes
 
-# Cluster and synthesize
-python -m research.cli synthesize
-```
+Document work sessions tied to GitHub Issues in `docs/session-notes/`:
 
-**Key Pattern:** Research without questions - let the corpus reveal its themes through clustering rather than starting with specific queries.
-
-## Development Environment
-
-**DevContainer (recommended):**
-```bash
-# VSCode: Ctrl+Shift+P → "Dev Containers: Reopen in Container"
-```
-
-**Local:**
-```bash
-pip install -e ".[research]"
-```
+- **Format:** `ISSUE-NN-description.md` (one file per issue, append-forever)
+- **Structure:** Date sections within file for chronological tracking
+- **Index:** Update `docs/SESSION_NOTES.md` with new entries
+- **When:** Working on any GitHub Issue, or ad-hoc exploratory sessions
 
 ## Key Files
 
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Architecture and ownership
-- [docs/USER_GUIDE.md](docs/USER_GUIDE.md) - Development guide
-- [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) - Service dependencies
-- [research/](research/) - Research RAG module
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Repo architecture and ownership
+- [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) - Infrastructure dependencies
+- [docs/USER_GUIDE.md](docs/USER_GUIDE.md) - Development environment and usage
 - [docs/decisions/](docs/decisions/) - Architecture Decision Records
+- [docs/session-notes/](docs/session-notes/) - Session logs by issue
+- [~/.claude/CLAUDE.md](~/.claude/CLAUDE.md) - Global instructions (user-level)
 
-## Integration with semops-core
+## Tech Stack
 
-This repo can run standalone but benefits from semops-core infrastructure:
-
-| Service | Port | Used For |
-|---------|------|----------|
-| Qdrant | 6333 | Vector storage |
-| Ollama | 11434 | Local embeddings |
-| Docling | 5001 | PDF processing |
-
-Start semops-core services if available, or configure cloud alternatives in `.env`.
+- **Python 3.11+** with pyproject.toml packaging
+- **DevContainer** with GPU support (PyTorch CUDA 12.1)
+- **DuckDB** for local analytics
+- **dbt-core** with DuckDB adapter
+- **SDV** for synthetic data generation
+- **Ollama** for embeddings (coherence scoring)

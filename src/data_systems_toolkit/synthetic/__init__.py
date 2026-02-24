@@ -5,7 +5,7 @@ from .ecommerce import EcommerceDataGenerator
 from .analytics import AnalyticsDataGenerator
 
 __all__ = [
-    "SyntheticDataGenerator",
-    "EcommerceDataGenerator",
-    "AnalyticsDataGenerator",
+ "SyntheticDataGenerator",
+ "EcommerceDataGenerator",
+ "AnalyticsDataGenerator",
 ]

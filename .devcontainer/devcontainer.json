@@ -1,0 +1,61 @@
+{
+ "name": "Data Systems Toolkit",
+ "build": {
+ "dockerfile": "Dockerfile",
+ "context": ".."
+ },
+
+ // GPU passthrough
+ "runArgs": [
+ "--gpus", "all"
+ ],
+
+ // Mount workspace
+ "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+ "workspaceFolder": "/workspace",
+
+ // Forward ports for Jupyter and MLflow
+ "forwardPorts": [8888, 5000],
+ "portsAttributes": {
+ "8888": {
+ "label": "Jupyter",
+ "onAutoForward": "notify"
+ },
+ "5000": {
+ "label": "MLflow UI",
+ "onAutoForward": "notify"
+ }
+ },
+
+ // VSCode customizations
+ "customizations": {
+ "vscode": {
+ "extensions": [
+ "ms-python.python",
+ "ms-python.vscode-pylance",
+ "ms-toolsai.jupyter",
+ "ms-toolsai.vscode-jupyter-cell-tags",
+ "charliermarsh.ruff"
+ ],
+ "settings": {
+ "python.defaultInterpreterPath": "/opt/conda/bin/python",
+ "python.formatting.provider": "none",
+ "editor.formatOnSave": true,
+ "[python]": {
+ "editor.defaultFormatter": "charliermarsh.ruff",
+ "editor.codeActionsOnSave": {
+ "source.fixAll": "explicit",
+ "source.organizeImports": "explicit"
+ }
+ },
+ "jupyter.widgetScriptSources": ["jsdelivr.com", "unpkg.com"]
+ }
+ }
+ },
+
+ // Install the package in editable mode after container creation
+ "postCreateCommand": "pip install -e '.[dev,notebooks]' && echo 'Environment ready!'",
+
+ // Run as root (simpler for dev, PyTorch image default)
+ "remoteUser": "root"
+}

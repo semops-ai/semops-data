@@ -57,18 +57,18 @@ python -m research.cli synthesize
 
 ```
 semops-dx-orchestrator [PLATFORM/DX]
-        │
-        ▼
+ │
+ ▼
 semops-core [SCHEMA/INFRASTRUCTURE]
-        │
-        │  Provides: Qdrant, Ollama, Docling services
-        │
-        ▼
-semops-data [PRODUCT]  ← This repo
-        │
-        │  Owns: Data utilities, Research RAG
-        │
-        └── First publishable product in ecosystem
+ │
+ │ Provides: Qdrant, Ollama, Docling services
+ │
+ ▼
+semops-data [PRODUCT] ← This repo
+ │
+ │ Owns: Data utilities, Research RAG
+ │
+ └── First publishable product in ecosystem
 ```
 
 **Key insight:** This repo is designed for external users - it's the first product to be published for broader use.

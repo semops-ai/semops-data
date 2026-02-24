@@ -9,9 +9,9 @@
 
 | Task | Command |
 |------|---------|
-| Open DevContainer | VSCode -> Reopen in Container |
-| Start Jupyter | `jupyter lab` |
-| Start MLflow UI | `mlflow ui --host 0.0.0.0` |
+| Open DevContainer | VSCode → Reopen in Container |
+| Start Jupyter | `jupyter lab --port 8888` |
+| Start MLflow UI | `mlflow ui --host 0.0.0.0 --port 5000` |
 | Run tests | `pytest` |
 | Lint | `ruff check . && ruff format .` |
 
@@ -20,7 +20,7 @@
 ### Starting the Environment
 
 1. Open repo in VSCode
-2. `Ctrl+Shift+P` -> "Dev Containers: Reopen in Container"
+2. `Ctrl+Shift+P` → "Dev Containers: Reopen in Container"
 3. Wait for build (~5 min first time)
 4. Run `notebooks/00-environment-test.ipynb` to verify
 
@@ -29,19 +29,19 @@
 After changing `.devcontainer/Dockerfile`:
 
 ```
-Ctrl+Shift+P -> "Dev Containers: Rebuild Container"
+Ctrl+Shift+P → "Dev Containers: Rebuild Container"
 ```
 
 For clean rebuild:
 ```
-Ctrl+Shift+P -> "Dev Containers: Rebuild Container Without Cache"
+Ctrl+Shift+P → "Dev Containers: Rebuild Container Without Cache"
 ```
 
 ### Verifying GPU
 
 ```python
 import torch
-print(f"CUDA available: {torch.cuda.is_available()}")
+print(f"CUDA available: {torch.cuda.is_available}")
 print(f"GPU: {torch.cuda.get_device_name(0)}")
 ```
 
@@ -55,7 +55,7 @@ nvidia-smi
 ### Issue: GPU not detected in container
 
 **Symptoms:**
-- `torch.cuda.is_available()` returns False
+- `torch.cuda.is_available` returns False
 - `nvidia-smi` not found
 
 **Cause:**
@@ -74,7 +74,7 @@ docker info | grep -i runtime
 docker run --rm --gpus all nvidia/cuda:12.1.0-base-ubuntu22.04 nvidia-smi
 
 # 4. Rebuild container
-# Ctrl+Shift+P -> "Dev Containers: Rebuild Container"
+# Ctrl+Shift+P → "Dev Containers: Rebuild Container"
 ```
 
 ### Issue: Out of GPU memory
@@ -91,15 +91,15 @@ docker run --rm --gpus all nvidia/cuda:12.1.0-base-ubuntu22.04 nvidia-smi
 ```python
 # Clear cache
 import torch
-torch.cuda.empty_cache()
+torch.cuda.empty_cache
 
 # Reduce batch size
 loader = DataLoader(dataset, batch_size=16)
 
 # Use mixed precision
 from torch.cuda.amp import autocast
-with autocast():
-    outputs = model(inputs)
+with autocast:
+ outputs = model(inputs)
 ```
 
 ### Issue: Port already in use
@@ -110,15 +110,15 @@ with autocast():
 
 **Cause:**
 - Previous process still running
-- Conflict with other services
+- Conflict with semops-core services
 
 **Fix:**
 ```bash
 # Find what's using the port
-lsof -i :<port>
+lsof -i :5000
 
 # Or check Docker
-docker ps --filter "publish=<port>"
+docker ps --filter "publish=5000"
 ```
 
 ### Issue: Container won't start
@@ -130,10 +130,10 @@ docker ps --filter "publish=<port>"
 **Fix:**
 ```bash
 # Check Docker logs
-docker logs <container-id>
+docker logs $(docker ps -aq --filter "ancestor=vsc-semops-data*" | head -1)
 
 # Rebuild without cache
-# Ctrl+Shift+P -> "Dev Containers: Rebuild Container Without Cache"
+# Ctrl+Shift+P → "Dev Containers: Rebuild Container Without Cache"
 ```
 
 ## Data Management
@@ -141,13 +141,13 @@ docker logs <container-id>
 ### Directory Structure
 
 ```text
-data/           # Working datasets (gitignored)
-├── raw/        # Original downloads - never modify
-├── processed/  # Cleaned, ready for modeling
-└── interim/    # Intermediate processing
+data/ # Working datasets (gitignored)
+├── raw/ # Original downloads - never modify
+├── processed/ # Cleaned, ready for modeling
+└── interim/ # Intermediate processing
 
-mlruns/         # MLflow tracking (gitignored)
-samples/        # Canonical examples (committed)
+mlruns/ # MLflow tracking (gitignored)
+samples/ # Canonical examples (committed)
 ```
 
 ### Data Conventions
@@ -172,8 +172,8 @@ samples/        # Canonical examples (committed)
 
 **Local UI:**
 ```bash
-mlflow ui --host 0.0.0.0
-# Access via the MLflow web interface
+mlflow ui --host 0.0.0.0 --port 5000
+# Access at http://localhost:5000
 ```
 
 **Gotchas:**
@@ -196,8 +196,8 @@ pip install -e ".[mlops]"
 
 ```bash
 # .env (optional, gitignored)
-SUPABASE_URL=...           # Future: semops-core integration
-ANTHROPIC_API_KEY=...      # Future: LLM integration
+SUPABASE_URL=... # Future: semops-core integration
+ANTHROPIC_API_KEY=... # Future: LLM integration
 ```
 
 ## Related Documentation

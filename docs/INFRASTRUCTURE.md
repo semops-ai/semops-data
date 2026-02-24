@@ -3,18 +3,65 @@
 > **Repo:** `semops-data`
 > **Owner:** This repo owns and operates these services
 > **Status:** ACTIVE
-> **Version:** 1.1.0
-> **Last Updated:** 2025-12-29
-
-Development environment, services, and data locations.
+> **Version:** 1.3.0
+> **Last Updated:** 2026-02-23
 
 ---
 
-## DevContainer Environment
+## Services
 
-### Overview
+> **Port authority:** [PORTS.md](https://github.com/semops-ai/semops-dx-orchestrator/blob/main/docs/PORTS.md) — the single source of truth for all port allocations. Register new ports there before use.
 
-Primary development uses a GPU-enabled DevContainer for isolated, reproducible workflows.
+| Service | Port | Purpose | Runtime |
+|---------|------|---------|---------|
+| Jupyter Lab | 8888 | Notebook interface | DevContainer or docker-compose (`notebooks` profile) |
+| MLflow UI | 5000 | Experiment tracking | DevContainer |
+| Marquez API | 5000 | Data lineage API | docker-compose (`lineage` profile) — **conflicts with MLflow** |
+| Marquez Admin | 5002 | Data lineage admin | docker-compose (`lineage` profile) |
+| Marquez Web | 3005 | Data lineage UI | docker-compose (`lineage` profile) |
+
+## Docker Configuration
+
+### docker-compose.yml
+
+Alternative to DevContainer for specific workloads. Services use Docker Compose profiles — start only what you need:
+
+```bash
+# Lineage stack (Marquez API + Web)
+docker compose --profile lineage up -d
+
+# Notebooks (Jupyter Lab)
+docker compose --profile notebooks up -d
+```
+
+| Profile | Services | Ports |
+|---------|----------|-------|
+| *(default)* | python, dbt | — (no exposed ports) |
+| `lineage` | marquez, marquez-web | 5000, 5002, 3005 |
+| `notebooks` | jupyter | 8888 |
+
+### Network
+
+| Network | Services | Purpose |
+|---------|----------|---------|
+| Host network | Jupyter Lab, MLflow | DevContainer port forwarding |
+
+> **Convention:** Cross-repo access uses `localhost` port mapping, not Docker internal networking. See [GLOBAL_INFRASTRUCTURE.md](https://github.com/semops-ai/semops-dx-orchestrator/blob/main/docs/GLOBAL_INFRASTRUCTURE.md#how-repos-connect).
+
+### Starting Services
+
+```bash
+# DevContainer (primary development environment)
+# Open in VSCode → Ctrl+Shift+P → "Dev Containers: Reopen in Container"
+
+# Jupyter Lab (inside container)
+jupyter lab --port 8888
+
+# MLflow UI (inside container)
+mlflow ui --host 0.0.0.0 --port 5000
+```
+
+### DevContainer
 
 | Component | Value |
 |-----------|-------|
@@ -22,302 +69,99 @@ Primary development uses a GPU-enabled DevContainer for isolated, reproducible w
 | **GPU Support** | NVIDIA CUDA 12.1 (compatible with driver 12.9+) |
 | **Python** | 3.10 (from PyTorch image) |
 
-### Prerequisites
+## Environment Variables
+
+> **Convention:** Use `SEMOPS_DB_*` for application database config, `POSTGRES_*` for Supabase container config. These are different — see [GLOBAL_INFRASTRUCTURE.md](https://github.com/semops-ai/semops-dx-orchestrator/blob/main/docs/GLOBAL_INFRASTRUCTURE.md#environment-variable-conventions).
+
+| Variable | Purpose | Required |
+|----------|---------|----------|
+| `OPENAI_API_KEY` | Embeddings for coherence scoring | For coherence module |
+| `ANTHROPIC_API_KEY` | LLM synthesis | Optional |
+
+## Connection Patterns
+
+How this repo connects to shared infrastructure:
+
+| Service | Method | Details |
+|---------|--------|---------|
+| Qdrant | `localhost:6333` | Vector storage for coherence scoring |
+| PostgreSQL | `localhost:5434` | Shared database (direct access) |
+| Ollama | `localhost:11434` | Local embeddings |
+| MCP Server | stdio | Registered in `~/.claude.json` (global) or `.mcp.json` (project) |
+
+## Python Stack
+
+| Property | Value |
+|----------|-------|
+| **Python version** | `3.10` |
+| **Package manager** | `pip` with `pyproject.toml` (DevContainer; global standard is `uv`) |
+| **Virtual environment** | DevContainer (isolated) |
+| **Linter/formatter** | `ruff` |
+| **Test framework** | `pytest` |
+
+### Key Dependencies
+
+| Library | Purpose | Shared With |
+|---------|---------|-------------|
+| `pandas` | Data manipulation | backoffice |
+| `numpy` | Numerical computing | — |
+| `sdv` | Synthetic data generation | — |
+| `faker` | Fake data generation | — |
+| `duckdb` | Local analytics engine | — |
+| `sqlalchemy` | Database abstraction | semops |
+| `pydantic` | Settings and data models | semops, publisher |
+| `click` | CLI framework | semops, publisher |
+| `pyyaml` | YAML handling | semops, publisher, backoffice, dx-hub |
+| `mlflow` | Experiment tracking | — |
+| `sentence-transformers` | Coherence scoring embeddings | — |
+| `torch` | Deep learning (GPU) | — |
+| `pyarrow` | Columnar data format (data interchange) | — |
+| `great-expectations` | Data quality and validation | — |
+| `loguru` | Structured logging (replaces stdlib logging) | — |
+| `ysemops-dataofiling` | Data profiling | — |
+
+#### Optional Groups (architecturally notable)
+
+| Library | Group | Purpose |
+|---------|-------|---------|
+| `dbt-core` + `dbt-duckdb` | `dbt` | Transform framework (DuckDB adapter) |
+| `openlineage-python` + `marquez-python` | `lineage` | Lineage standard — traces to Agentic Lineage capability |
+| `mlflow` | `mlops` | Experiment tracking for coherence scoring |
+| `sentence-transformers` + `torch` | `coherence` | Embedding models for SC formula |
+
+### Setup
 
 ```bash
-# Verify Docker nvidia runtime
-docker info | grep -i runtime
-# Should show: nvidia
-
-# Verify GPU access
-docker run --rm --gpus all nvidia/cuda:12.1.0-base-ubuntu22.04 nvidia-smi
-```
-
-### Starting the Environment
-
-1. Open repo in VSCode
-2. `Ctrl+Shift+P` -> "Dev Containers: Reopen in Container"
-3. Wait for build (~5 min first time)
-4. Run `notebooks/00-environment-test.ipynb` to verify
-
-### Rebuilding
-
-After changing `.devcontainer/Dockerfile`:
-
-```
-Ctrl+Shift+P -> "Dev Containers: Rebuild Container"
-```
-
----
-
-## Services
-
-### DevContainer Services
-
-| Service | Purpose |
-|---------|---------|
-| Jupyter Lab | Notebook interface |
-| MLflow UI | Experiment tracking |
-
----
-
-## Data Locations
-
-### Directory Structure
-
-```
-data-systems-toolkit/
-├── data/                    # Working datasets (gitignored)
-│   ├── raw/                # Original downloads, never modify
-│   ├── processed/          # Cleaned, ready for modeling
-│   └── interim/            # Intermediate processing
-├── mlruns/                  # MLflow tracking (gitignored)
-├── samples/                 # Canonical examples (committed)
-└── notebooks/               # Jupyter notebooks
-```
-
-### Storage Policies
-
-| Directory | Git Status | Persistence | Purpose |
-|-----------|------------|-------------|---------|
-| `data/` | Ignored (except `.gitkeep`) | Local only | Working datasets |
-| `mlruns/` | Ignored (except `.gitkeep`) | Local only | Experiment tracking |
-| `samples/` | Committed | Shared | Canonical pipeline examples |
-| `notebooks/` | Committed | Shared | Analysis notebooks |
-
-### Data Conventions
-
-1. **Never modify `data/raw/`** - Keep originals intact
-2. **Use Parquet for processed data** - Efficient, typed storage
-3. **HuggingFace cache** - Auto-managed at `~/.cache/huggingface/` in container
-
----
-
-## MLflow Configuration
-
-### Local File-Based Tracking
-
-Default configuration uses local filesystem:
-
-```
-mlruns/
-├── 0/                      # Default experiment
-├── [experiment_id]/        # Named experiments
-│   ├── meta.yaml
-│   └── [run_id]/
-│       ├── params/
-│       ├── metrics/
-│       └── artifacts/
-```
-
-### Starting the UI
-
-```bash
-# In container terminal (--host required for container access)
-mlflow ui --host 0.0.0.0
-
-# Access via the MLflow web interface
-```
-
-### Tracking Server (Optional)
-
-For persistence across containers or team sharing:
-
-```bash
-mlflow server \
-    --backend-store-uri sqlite:///mlflow.db \
-    --default-artifact-root ./mlartifacts
-```
-
----
-
-## Stack Preferences
-
-### Python Environment
-
-| Tool | Purpose |
-|------|---------|
-| pandas, numpy | Data manipulation |
-| scikit-learn | ML models |
-| PyTorch | Deep learning (GPU) |
-| MLflow | Experiment tracking |
-| HuggingFace datasets | Dataset loading |
-
-### Dependency Groups
-
-```toml
-# pyproject.toml
-[project.optional-dependencies]
-mlops = ["mlflow", "datasets"]
-gpu = ["torch", "torchvision"]
-notebooks = ["jupyter", "jupyterlab", "matplotlib", "seaborn"]
-dev = ["pytest", "ruff", "mypy"]
-```
-
-### Installing Dependencies
-
-```bash
-# In container (automatic via postCreateCommand)
+# In DevContainer (automatic via postCreateCommand)
 pip install -e ".[dev,notebooks,mlops]"
 
 # Or specific groups
-pip install -e ".[mlops]"
+pip install -e ".[coherence]"
 ```
 
----
-
-## GPU Configuration
-
-### Host Requirements
-
-| Component | Minimum | Verified |
-|-----------|---------|----------|
-| NVIDIA Driver | 525+ | 575.64.03 |
-| CUDA | 12.0+ | 12.9 |
-| nvidia-container-toolkit | Latest | Installed |
-
-### Container GPU Access
-
-Configured in `.devcontainer/devcontainer.json`:
-
-```json
-{
-    "runArgs": ["--gpus", "all"]
-}
-```
-
-### Verifying GPU
-
-```python
-import torch
-print(f"CUDA available: {torch.cuda.is_available()}")
-print(f"GPU: {torch.cuda.get_device_name(0)}")
-print(f"Memory: {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} GB")
-```
-
-### Memory Management
-
-```python
-# Clear GPU cache
-torch.cuda.empty_cache()
-
-# Monitor usage
-nvidia-smi  # From container terminal
-```
-
----
-
-## Environment Variables
-
-### Required
-
-None - DevContainer is self-contained.
-
-### Optional (for integrations)
+## Health Checks
 
 ```bash
-# .env (gitignored)
+# Jupyter Lab
+curl http://localhost:8888/api/status
 
-# Future: semops-core integration
-SUPABASE_URL=...
-SUPABASE_SERVICE_ROLE_KEY=...
+# MLflow
+curl http://localhost:5000/health
 
-# Future: cloud LLM APIs
-ANTHROPIC_API_KEY=...
-OPENAI_API_KEY=...
+# GPU
+python -c "import torch; print(f'CUDA: {torch.cuda.is_available}')"
 ```
 
----
+## Consumed By
 
-## Planned Services
+| Repo | Services Used |
+|------|---------------|
+| *(none currently)* | — |
 
-### Stack Simulation
+## Related Documentation
 
-| Service | Purpose |
-|---------|---------|
-| Marquez | Lineage visualization |
-| Marquez API | Lineage queries |
-
-### Integration with semops-core (Active)
-
-The Research RAG module depends on these services from semops-core:
-
-| Service | Purpose | Used By |
-|---------|---------|---------|
-| **Qdrant** | Vector storage for embeddings | `research/embed.py` |
-| **Docling** | PDF/document processing | `research/ingest.py` |
-| **Ollama** | Local embeddings (nomic-embed-text) | `research/embed.py` |
-
-**Starting semops-core services:**
-
-Ensure the semops-core infrastructure services (Qdrant, Docling, Ollama) are running before using the Research RAG module.
-
-### External APIs (Research Module)
-
-| Service | Purpose | Config |
-|---------|---------|--------|
-| **OpenAI** | `text-embedding-3-small` embeddings | `OPENAI_API_KEY` |
-| **Anthropic** | Claude LLM synthesis | `ANTHROPIC_API_KEY` |
-| **Crawl4AI** | Web scraping | No API key required |
-
----
-
-## Troubleshooting
-
-### GPU Not Detected in Container
-
-```bash
-# 1. Verify host GPU
-nvidia-smi
-
-# 2. Verify Docker runtime
-docker info | grep -i runtime
-
-# 3. Test container GPU access
-docker run --rm --gpus all nvidia/cuda:12.1.0-base-ubuntu22.04 nvidia-smi
-
-# 4. Rebuild container
-# Ctrl+Shift+P -> "Dev Containers: Rebuild Container"
-```
-
-### Port Already in Use
-
-```bash
-# Find what's using a port
-lsof -i :<port>
-# or
-docker ps --filter "publish=<port>"
-```
-
-### Container Won't Start
-
-```bash
-# Check Docker logs
-docker logs <container-id>
-
-# Rebuild from scratch
-# Ctrl+Shift+P -> "Dev Containers: Rebuild Container Without Cache"
-```
-
-### Out of GPU Memory
-
-```python
-# Clear cache
-torch.cuda.empty_cache()
-
-# Reduce batch size in training
-loader = DataLoader(dataset, batch_size=16)  # Smaller
-
-# Use mixed precision
-from torch.cuda.amp import autocast
-with autocast():
-    outputs = model(inputs)
-```
-
----
-
-## Related Documents
-
-- [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture
-- [USER_GUIDE.md](USER_GUIDE.md) - How to use the toolkit
-- ADR-0002 - DevContainer decision
+- [ARCHITECTURE.md](ARCHITECTURE.md) - This repo's architecture
+- [GLOBAL_INFRASTRUCTURE.md](https://github.com/semops-ai/semops-dx-orchestrator/blob/main/docs/GLOBAL_INFRASTRUCTURE.md) - Ecosystem connectivity, network conventions, env var standards
+- [PORTS.md](https://github.com/semops-ai/semops-dx-orchestrator/blob/main/docs/PORTS.md) - Port registry (single source of truth)
+- [DIAGRAMS.md](https://github.com/semops-ai/semops-dx-orchestrator/blob/main/docs/DIAGRAMS.md) - Infrastructure service diagrams
+- [ADR-0002](decisions/ADR-0002-devcontainer-mlops-environment.md) - DevContainer decision
