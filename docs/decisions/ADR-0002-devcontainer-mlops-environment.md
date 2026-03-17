@@ -71,13 +71,13 @@ MLflow provides:
 ```toml
 [project.optional-dependencies]
 mlops = [
- "mlflow>=2.10.0",
- "datasets>=2.16.0", # HuggingFace datasets
+    "mlflow>=2.10.0",
+    "datasets>=2.16.0",  # HuggingFace datasets
 ]
 notebooks = [
- "jupyter>=1.0.0",
- "jupyterlab>=4.0.0",
- # ... existing
+    "jupyter>=1.0.0",
+    "jupyterlab>=4.0.0",
+    # ... existing
 ]
 ```
 
@@ -86,14 +86,14 @@ notebooks = [
 ```
 data-systems-toolkit/
 ├── .devcontainer/
-│ ├── devcontainer.json # VSCode config, GPU, ports
-│ ├── Dockerfile # PyTorch base + deps
-│ └── requirements.txt # Pinned versions (optional)
-├── data/ # Local datasets (gitignored)
-│ └── .gitkeep
-├── mlruns/ # MLflow tracking (gitignored)
+│   ├── devcontainer.json    # VSCode config, GPU, ports
+│   ├── Dockerfile           # PyTorch base + deps
+│   └── requirements.txt     # Pinned versions (optional)
+├── data/                    # Local datasets (gitignored)
+│   └── .gitkeep
+├── mlruns/                  # MLflow tracking (gitignored)
 ├── notebooks/
-│ └── 00-environment-test.ipynb
+│   └── 00-environment-test.ipynb
 └── ...
 ```
 

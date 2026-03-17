@@ -22,6 +22,7 @@ Run the test notebook to confirm everything works:
 3. Run all cells with `Shift+Enter` or "Run All"
 
 Or quick CLI check:
+
 ```bash
 python -c "import torch; print(f'GPU: {torch.cuda.is_available}')"
 ```
@@ -32,26 +33,27 @@ python -c "import torch; print(f'GPU: {torch.cuda.is_available}')"
 
 ### Directory Structure
 
-```
+```text
 data-systems-toolkit/
-├── data/ # Your working datasets (gitignored)
-│ ├── raw/ # Original downloaded data
-│ ├── processed/ # Cleaned/transformed data
-│ └── interim/ # Intermediate processing steps
-├── mlruns/ # MLflow tracking (gitignored)
-└── notebooks/ # Your analysis notebooks
+├── data/                    # Your working datasets (gitignored)
+│   ├── raw/                 # Original downloaded data
+│   ├── processed/           # Cleaned/transformed data
+│   └── interim/             # Intermediate processing steps
+├── mlruns/                  # MLflow tracking (gitignored)
+└── notebooks/               # Your analysis notebooks
 ```
 
 ### Where to Put Data
 
 | Data Type | Location | Notes |
-|-----------|----------|-------|
+| --- | --- | --- |
 | Downloaded datasets | `data/raw/` | Original, never modify |
 | Processed data | `data/processed/` | Cleaned, ready for modeling |
 | Intermediate files | `data/interim/` | Temp processing outputs |
 | HuggingFace cache | Auto-managed | `~/.cache/huggingface/` in container |
 
 **First time setup:**
+
 ```bash
 mkdir -p data/raw data/processed data/interim
 ```
@@ -81,14 +83,14 @@ df = dataset.to_pandas
 **Popular datasets for practice:**
 
 | Dataset | Use Case | Load Command |
-|---------|----------|--------------|
+| --- | --- | --- |
 | Iris | Classification basics | `load_dataset("scikit-learn/iris")` |
 | Wine | Multi-class classification | `load_dataset("scikit-learn/wine")` |
 | California Housing | Regression | `load_dataset("scikit-learn/california-housing")` |
 | IMDB Reviews | Text classification | `load_dataset("imdb")` |
 | MNIST | Image classification | `load_dataset("mnist")` |
 
-**Browse available datasets:** https://huggingface.co/datasets
+**Browse available datasets:** <https://huggingface.co/datasets>
 
 ### Option 2: Kaggle Datasets
 
@@ -126,12 +128,12 @@ df = pd.read_csv("data/raw/my_local_file.csv")
 
 ```python
 from sklearn.datasets import (
- load_iris,
- load_wine,
- load_breast_cancer,
- fetch_california_housing,
- make_classification, # Generate synthetic
- make_regression,
+    load_iris,
+    load_wine,
+    load_breast_cancer,
+    fetch_california_housing,
+    make_classification,  # Generate synthetic
+    make_regression,
 )
 
 # Load as DataFrame
@@ -169,21 +171,22 @@ mlflow.set_experiment("my-experiment-name")
 
 # Log a run
 with mlflow.start_run(run_name="my-first-run"):
- # Log parameters
- mlflow.log_param("model_type", "random_forest")
- mlflow.log_param("n_estimators", 100)
+    # Log parameters
+    mlflow.log_param("model_type", "random_forest")
+    mlflow.log_param("n_estimators", 100)
 
- # Log metrics
- mlflow.log_metric("accuracy", 0.95)
- mlflow.log_metric("f1_score", 0.93)
+    # Log metrics
+    mlflow.log_metric("accuracy", 0.95)
+    mlflow.log_metric("f1_score", 0.93)
 
- # Log model (optional)
- mlflow.sklearn.log_model(model, "model")
+    # Log model (optional)
+    mlflow.sklearn.log_model(model, "model")
 ```
 
 ### Compare Runs
 
 In the MLflow UI (localhost:5000):
+
 1. Select experiments in left sidebar
 2. Check runs to compare
 3. Click "Compare" button
@@ -214,7 +217,7 @@ y = df["Species"]
 
 # 3. Split data
 X_train, X_test, y_train, y_test = train_test_split(
- X, y, test_size=0.2, random_state=42
+    X, y, test_size=0.2, random_state=42
 )
 
 # 4. Scale features (optional but recommended)
@@ -226,33 +229,33 @@ X_test_scaled = scaler.transform(X_test)
 mlflow.set_experiment("iris-classification")
 
 with mlflow.start_run(run_name="random-forest-v1"):
- # Parameters
- n_estimators = 100
- max_depth = 5
+    # Parameters
+    n_estimators = 100
+    max_depth = 5
 
- mlflow.log_param("model", "RandomForestClassifier")
- mlflow.log_param("n_estimators", n_estimators)
- mlflow.log_param("max_depth", max_depth)
+    mlflow.log_param("model", "RandomForestClassifier")
+    mlflow.log_param("n_estimators", n_estimators)
+    mlflow.log_param("max_depth", max_depth)
 
- # Train
- model = RandomForestClassifier(
- n_estimators=n_estimators,
- max_depth=max_depth,
- random_state=42
- )
- model.fit(X_train_scaled, y_train)
+    # Train
+    model = RandomForestClassifier(
+        n_estimators=n_estimators,
+        max_depth=max_depth,
+        random_state=42
+    )
+    model.fit(X_train_scaled, y_train)
 
- # Evaluate
- y_pred = model.predict(X_test_scaled)
- accuracy = accuracy_score(y_test, y_pred)
+    # Evaluate
+    y_pred = model.predict(X_test_scaled)
+    accuracy = accuracy_score(y_test, y_pred)
 
- mlflow.log_metric("accuracy", accuracy)
+    mlflow.log_metric("accuracy", accuracy)
 
- # Save model
- mlflow.sklearn.log_model(model, "model")
+    # Save model
+    mlflow.sklearn.log_model(model, "model")
 
- print(f"Accuracy: {accuracy:.3f}")
- print(classification_report(y_test, y_pred))
+    print(f"Accuracy: {accuracy:.3f}")
+    print(classification_report(y_test, y_pred))
 ```
 
 ### Basic Regression Pipeline
@@ -275,19 +278,19 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 mlflow.set_experiment("housing-regression")
 
 with mlflow.start_run(run_name="gradient-boosting-v1"):
- model = GradientBoostingRegressor(n_estimators=100)
- model.fit(X_train, y_train)
+    model = GradientBoostingRegressor(n_estimators=100)
+    model.fit(X_train, y_train)
 
- y_pred = model.predict(X_test)
+    y_pred = model.predict(X_test)
 
- rmse = np.sqrt(mean_squared_error(y_test, y_pred))
- r2 = r2_score(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
 
- mlflow.log_metric("rmse", rmse)
- mlflow.log_metric("r2", r2)
- mlflow.sklearn.log_model(model, "model")
+    mlflow.log_metric("rmse", rmse)
+    mlflow.log_metric("r2", r2)
+    mlflow.sklearn.log_model(model, "model")
 
- print(f"RMSE: {rmse:.3f}, R²: {r2:.3f}")
+    print(f"RMSE: {rmse:.3f}, R²: {r2:.3f}")
 ```
 
 ### Hyperparameter Tuning with Tracking
@@ -298,28 +301,28 @@ from sklearn.model_selection import GridSearchCV
 mlflow.set_experiment("hyperparameter-tuning")
 
 param_grid = {
- "n_estimators": [50, 100, 200],
- "max_depth": [3, 5, 10, None],
+    "n_estimators": [50, 100, 200],
+    "max_depth": [3, 5, 10, None],
 }
 
 with mlflow.start_run(run_name="grid-search"):
- grid_search = GridSearchCV(
- RandomForestClassifier(random_state=42),
- param_grid,
- cv=5,
- scoring="accuracy"
- )
- grid_search.fit(X_train, y_train)
+    grid_search = GridSearchCV(
+        RandomForestClassifier(random_state=42),
+        param_grid,
+        cv=5,
+        scoring="accuracy"
+    )
+    grid_search.fit(X_train, y_train)
 
- # Log best parameters
- for param, value in grid_search.best_params_.items:
- mlflow.log_param(f"best_{param}", value)
+    # Log best parameters
+    for param, value in grid_search.best_params_.items:
+        mlflow.log_param(f"best_{param}", value)
 
- mlflow.log_metric("best_cv_score", grid_search.best_score_)
- mlflow.log_metric("test_accuracy", grid_search.score(X_test, y_test))
+    mlflow.log_metric("best_cv_score", grid_search.best_score_)
+    mlflow.log_metric("test_accuracy", grid_search.score(X_test, y_test))
 
- print(f"Best params: {grid_search.best_params_}")
- print(f"Best CV score: {grid_search.best_score_:.3f}")
+    print(f"Best params: {grid_search.best_params_}")
+    print(f"Best CV score: {grid_search.best_score_:.3f}")
 ```
 
 ---
@@ -352,16 +355,16 @@ loader = DataLoader(dataset, batch_size=32, shuffle=True)
 
 # Define model
 class SimpleNN(nn.Module):
- def __init__(self, input_dim, hidden_dim, output_dim):
- super.__init__
- self.layers = nn.Sequential(
- nn.Linear(input_dim, hidden_dim),
- nn.ReLU,
- nn.Linear(hidden_dim, output_dim)
- )
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super.__init__
+        self.layers = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.ReLU,
+            nn.Linear(hidden_dim, output_dim)
+        )
 
- def forward(self, x):
- return self.layers(x)
+    def forward(self, x):
+        return self.layers(x)
 
 # Train on GPU
 device = torch.device("cuda" if torch.cuda.is_available else "cpu")
@@ -372,23 +375,23 @@ optimizer = torch.optim.Adam(model.parameters, lr=0.01)
 mlflow.set_experiment("pytorch-classification")
 
 with mlflow.start_run(run_name="simple-nn"):
- mlflow.log_param("hidden_dim", 32)
- mlflow.log_param("lr", 0.01)
+    mlflow.log_param("hidden_dim", 32)
+    mlflow.log_param("lr", 0.01)
 
- for epoch in range(100):
- for X_batch, y_batch in loader:
- X_batch, y_batch = X_batch.to(device), y_batch.to(device)
+    for epoch in range(100):
+        for X_batch, y_batch in loader:
+            X_batch, y_batch = X_batch.to(device), y_batch.to(device)
 
- optimizer.zero_grad
- outputs = model(X_batch)
- loss = criterion(outputs, y_batch)
- loss.backward
- optimizer.step
+            optimizer.zero_grad
+            outputs = model(X_batch)
+            loss = criterion(outputs, y_batch)
+            loss.backward
+            optimizer.step
 
- if epoch % 10 == 0:
- mlflow.log_metric("loss", loss.item, step=epoch)
+        if epoch % 10 == 0:
+            mlflow.log_metric("loss", loss.item, step=epoch)
 
- print(f"Final loss: {loss.item:.4f}")
+    print(f"Final loss: {loss.item:.4f}")
 ```
 
 ---
@@ -397,7 +400,7 @@ with mlflow.start_run(run_name="simple-nn"):
 
 The coherence module measures semantic drift in knowledge patterns using the **SC formula**:
 
-```
+```text
 SC = (Availability × Consistency × Stability)^(1/3)
 ```
 
@@ -435,20 +438,21 @@ python -m data_systems_toolkit.coherence.cli run-v2
 ```bash
 # Score against a corpus file
 python -m data_systems_toolkit.coherence.cli score \
- --text "Data validation prevents downstream quality issues" \
- --corpus data/corpus_patterns.json \
- --method v2-nli
+    --text "Data validation prevents downstream quality issues" \
+    --corpus data/corpus_patterns.json \
+    --method v2-nli
 ```
 
 Output:
+
 ```json
 {
- "pattern_id": "ad-hoc",
- "availability": 0.8234,
- "consistency": 0.9112,
- "stability": 1.0,
- "composite_score": 0.9087,
- "method": "v2-nli"
+  "pattern_id": "ad-hoc",
+  "availability": 0.8234,
+  "consistency": 0.9112,
+  "stability": 1.0,
+  "composite_score": 0.9087,
+  "method": "v2-nli"
 }
 ```
 
@@ -458,21 +462,21 @@ Pattern files are JSON arrays:
 
 ```json
 [
- {"text": "Schema evolution must be backward compatible", "pattern_id": "p1"},
- {"text": "Data lineage enables root cause analysis", "pattern_id": "p2"}
+  {"text": "Schema evolution must be backward compatible", "pattern_id": "p1"},
+  {"text": "Data lineage enables root cause analysis", "pattern_id": "p2"}
 ]
 ```
 
 ```bash
 # Run v1 with custom data
 python -m data_systems_toolkit.coherence.cli run-v1 \
- --input data/test_patterns.json \
- --corpus data/corpus_patterns.json
+    --input data/test_patterns.json \
+    --corpus data/corpus_patterns.json
 
 # Run v2 with custom data
 python -m data_systems_toolkit.coherence.cli run-v2 \
- --input data/test_patterns.json \
- --corpus data/corpus_patterns.json
+    --input data/test_patterns.json \
+    --corpus data/corpus_patterns.json
 ```
 
 ### View Results in MLflow
@@ -483,6 +487,7 @@ mlflow ui --host 0.0.0.0 --port 5000
 ```
 
 Experiments are logged under `coherence-v1-embedding` and `coherence-v2-nli` with:
+
 - **Parameters:** model names, corpus size, method
 - **Metrics:** avg/min/max availability, consistency, composite score
 - **Artifacts:** Full results JSON for each run
@@ -503,15 +508,15 @@ corpus_embeddings = embed_texts([p.text for p in corpus])
 
 result = score_pattern(pattern, corpus, corpus_embeddings, method="v2-nli")
 print(f"SC = {result.composite_score:.3f}")
-print(f" Availability: {result.availability:.3f}")
-print(f" Consistency: {result.consistency:.3f}")
-print(f" Stability: {result.stability:.3f}")
+print(f"  Availability: {result.availability:.3f}")
+print(f"  Consistency:  {result.consistency:.3f}")
+print(f"  Stability:    {result.stability:.3f}")
 ```
 
 ### Experiment Methods
 
 | Method | Components | Use Case |
-|--------|-----------|----------|
+| --- | --- | --- |
 | `v1-embedding` | Availability only | Fast baseline, embedding recall |
 | `v2-nli` | Availability + Consistency | Catches contradictions, MVP target |
 
@@ -520,13 +525,233 @@ Stretch experiments (v3-judge, v4-hybrid, v5-multi-judge) are planned for future
 ### Interpreting Scores
 
 | Score Range | Interpretation |
-|-------------|---------------|
+| --- | --- |
 | 0.9 - 1.0 | Highly coherent — pattern aligns well with corpus |
 | 0.7 - 0.9 | Moderate coherence — some drift or weak alignment |
 | 0.5 - 0.7 | Low coherence — significant divergence |
 | < 0.5 | Incoherent — contradicts or is unrelated to corpus |
 
 Thresholds for "drift detected" will be calibrated empirically from experiment results.
+
+---
+
+## Synthetic Data Lab
+
+Generate realistic synthetic datasets using SDV, MOSTLY AI, and Faker. No domain model required — this is a generic lab for building, comparing, and evaluating synthesizers.
+
+### Installation
+
+Core packages (`sdv`, `faker`, `mostlyai-mock`, `mostlyai-qa`) are in the base install. For local training with MOSTLY AI, install the `synthetic-data` extra:
+
+```bash
+# CPU training
+uv pip install -e ".[synthetic-data]"
+
+# GPU training (Linux + CUDA — preferred in DevContainer)
+uv pip install "mostlyai[local-gpu]>=5.0.0"
+```
+
+### Notebooks
+
+| Notebook | What it does |
+| -------- | ------------ |
+| `01-single-table-generation.ipynb` | Load Adult Census from HuggingFace, train GaussianCopula + CTGAN (SDV) and TabularARGN (MOSTLY AI), compare quality |
+| `02-multi-table-constraints.ipynb` | Build an e-commerce schema (customers → orders → order_items ← products), compare SDV HMA vs MOSTLY AI on referential integrity |
+| `03-mock-data-generator.ipynb` | Generate mock data without training data using `mostlyai-mock` and Faker across 3 locales |
+
+### Template Dataset Configs
+
+Pre-defined schemas in `configs/synthetic/`:
+
+| Config | Shape | Use case |
+| ------ | ----- | -------- |
+| `single-table-numeric.yaml` | Loan records, 10 numeric columns | Correlation preservation, distribution learning |
+| `single-table-mixed.yaml` | HR/employee data, mixed types (numeric, categorical, boolean, date) | Broad type coverage, ordinal columns |
+| `multi-table-relational.yaml` | E-commerce: 4 tables with FK graph | Referential integrity, cross-table distributions |
+
+### Quick Reference
+
+#### SDV — Single Table
+
+```python
+from sdv.metadata import SingleTableMetadata
+from sdv.single_table import GaussianCopulaSynthesizer, CTGANSynthesizer
+from sdv.evaluation.single_table import evaluate_quality
+
+metadata = SingleTableMetadata
+metadata.detect_from_dataframe(df)
+
+# Fast baseline
+gc = GaussianCopulaSynthesizer(metadata)
+gc.fit(df)
+syn = gc.sample(num_rows=5_000)
+
+# Higher fidelity
+ctgan = CTGANSynthesizer(metadata, epochs=100)
+ctgan.fit(df)
+syn = ctgan.sample(num_rows=5_000)
+
+# Evaluate
+quality = evaluate_quality(df, syn, metadata)
+print(f"Score: {quality.get_score:.3f}")
+```
+
+#### MOSTLY AI — Local Training
+
+```python
+from mostlyai import MostlyAI
+
+mostly = MostlyAI(local=True)
+
+# Train
+g = mostly.train(config={
+    "name": "my-generator",
+    "tables": [{"name": "census", "data": df}],
+})
+
+# Quick sample (no full job — great for notebooks)
+sample = mostly.probe(g, size=50)["census"]
+
+# Full generation
+syn = mostly.generate(g, size=5_000)["census"]
+```
+
+#### MOSTLY AI — Multi-Table
+
+```python
+g = mostly.train(config={
+    "name": "ecommerce",
+    "tables": [
+        {"name": "customers", "data": customers, "primary_key": "customer_id"},
+        {"name": "orders", "data": orders, "primary_key": "order_id",
+         "foreign_keys": [{"column": "customer_id",
+                           "references": {"table": "customers", "column": "customer_id"}}]},
+    ],
+})
+sd = mostly.generate(g)
+syn_customers, syn_orders = sd["customers"], sd["orders"]
+```
+
+#### MOSTLY AI QA Report
+
+```python
+from mostlyai import qa
+
+report = qa.report(
+    syn_tgt=syn,
+    trn_tgt=df_train,
+    hol_tgt=df_holdout,        # optional holdout for privacy check
+    report_path="data/qa-reports/my-report.html",
+)
+print(f"Accuracy: {report['accuracy']:.3f}")
+print(f"Privacy:  {report['privacy']:.3f}")
+```
+
+Open the HTML file in a browser for the full interactive report.
+
+#### Faker — PII Fields
+
+```python
+from faker import Faker
+
+# Three locale providers
+fake_us = Faker('en_US')
+fake_de = Faker('de_DE')
+fake_jp = Faker('ja_JP')
+
+# Multi-locale pool
+Faker.seed(42)
+fake = Faker(['en_US', 'en_GB', 'de_DE'])
+
+df['name'] = [fake.name for _ in range(len(df))]
+df['email'] = [fake.email for _ in range(len(df))]
+df['phone'] = [fake.phone_number for _ in range(len(df))]
+df['address'] = [fake.street_address for _ in range(len(df))]
+```
+
+#### mostlyai-mock — No Training Data Required
+
+```python
+from mostlyai.mock import sample
+
+df = sample(size=5_000, columns={
+    "age":          {"dtype": "integer", "min": 18, "max": 80},
+    "salary":       {"dtype": "float",   "min": 30_000, "max": 300_000},
+    "department":   {"dtype": "category", "values": ["Eng", "Sales", "HR"]},
+    "is_active":    {"dtype": "bool"},
+    "hire_date":    {"dtype": "datetime", "min": "2015-01-01", "max": "2024-12-31"},
+})
+```
+
+#### Load Config from YAML
+
+```python
+import yaml
+from mostlyai.mock import sample
+
+with open("configs/synthetic/single-table-mixed.yaml") as f:
+    config = yaml.safe_load(f)
+
+# Build schema from config columns
+schema = {
+    col["name"]: {"dtype": col["type"].replace("boolean", "bool")
+                                      .replace("categorical", "category")}
+    for col in config["columns"]
+}
+
+df = sample(size=config["rows"]["medium"], columns=schema)
+```
+
+### Output Locations
+
+| Output | Path |
+| ------ | ---- |
+| Synthetic parquet files | `data/synthetic/single-table/` |
+| Multi-table parquet files | `data/synthetic/multi-table/{sdv,mostlyai}/` |
+| Mock parquet files | `data/synthetic/mock/` |
+| MOSTLY AI QA HTML reports | `data/qa-reports/` |
+
+All paths under `data/` are gitignored.
+
+### Tool Selection Guide
+
+| Need | Tool |
+| --- | --- |
+| Dev/test data, no real data | `mostlyai-mock` + Faker |
+| PII-looking fields (names, emails) | Faker |
+| High-fidelity single-table synthesis | MOSTLY AI (`mostlyai[local]`) |
+| Multi-table with FK integrity | MOSTLY AI (handles automatically) |
+| Explicit model control / teaching | SDV (GaussianCopula, CTGAN, HMA) |
+| Differential privacy guarantees | MOSTLY AI (built-in DP config) |
+| Built-in HTML quality report | MOSTLY AI QA (`mostlyai-qa`) |
+
+### Troubleshooting
+
+#### `mostlyai` import error
+
+```bash
+# Ensure local extra is installed
+uv pip install "mostlyai[local]>=5.0.0"
+```
+
+#### MOSTLY AI training slow (CPU)
+
+- In DevContainer, use `mostlyai[local-gpu]` — the container has CUDA 12.1
+- Reduce training size with `sample` or limit `epochs` in config
+
+#### SDV metadata detection wrong types
+
+```python
+# Override detected type
+metadata.update_column("my_table", "date_col", sdtype="datetime",
+                        datetime_format="%Y-%m-%d")
+metadata.update_column("my_table", "id_col", sdtype="id")
+```
+
+#### Referential integrity failures (SDV HMA)
+
+- SDV HMA can lose FK integrity at scale — this is a known limitation
+- Switch to MOSTLY AI for multi-table if this matters
 
 ---
 
@@ -552,14 +777,14 @@ import mlflow
 from pathlib import Path
 
 def main:
- mlflow.set_experiment("production-model")
+    mlflow.set_experiment("production-model")
 
- with mlflow.start_run:
- # Your training code here
- pass
+    with mlflow.start_run:
+        # Your training code here
+        pass
 
 if __name__ == "__main__":
- main
+    main
 ```
 
 ### Load a Logged Model
@@ -572,7 +797,7 @@ predictions = model.predict(X_new)
 
 ---
 
-## Troubleshooting
+## General Troubleshooting
 
 ### GPU Not Detected
 
@@ -593,12 +818,12 @@ If False, rebuild container: `Ctrl+Shift+P` → "Dev Containers: Rebuild Contain
 torch.cuda.empty_cache
 
 # Reduce batch size
-loader = DataLoader(dataset, batch_size=16) # smaller batch
+loader = DataLoader(dataset, batch_size=16)  # smaller batch
 
 # Use mixed precision
 from torch.cuda.amp import autocast
 with autocast:
- outputs = model(inputs)
+    outputs = model(inputs)
 ```
 
 ### MLflow UI Not Loading

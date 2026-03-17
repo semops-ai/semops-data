@@ -8,25 +8,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```text
 semops-dx-orchestrator [PLATFORM/DX]
- │
- └── semops-core [ORCHESTRATOR]
- │
- └── semops-data [DATA PLATFORM] ◄── YOU ARE HERE
- │
- ├── Owns: Data utilities and analytics
- │ - Coherence scoring experiments
- │ - Synthetic data generation
- │ - Stack simulation (S3 → Delta Lake → Snowflake)
- │ - Data profiling and lineage tools
- │
- └── Uses: Infrastructure from semops-core
- - Qdrant, Docling, PostgreSQL
+        │
+        └── semops-core [ORCHESTRATOR]
+                │
+                └── semops-data [DATA PLATFORM] ◄── YOU ARE HERE
+                    │
+                    ├── Owns: Data utilities and analytics
+                    │   - Coherence scoring experiments
+                    │   - Synthetic data generation
+                    │   - Stack simulation (S3 → Delta Lake → Snowflake)
+                    │   - Data profiling and lineage tools
+                    │
+                    └── Uses: Infrastructure from semops-core
+                        - Qdrant, Docling, PostgreSQL
 ```
 
 **Key Ownership Boundary:**
 
 - This repo owns **data utilities** - coherence scoring, synthetic data, stack simulation, profiling, lineage
-- Research RAG and data due diligence extracted to `semops-research` (see #50)
+- Research RAG and data due diligence extracted to `semops-research` (see )
 - `semops-core` owns **infrastructure** - Qdrant, Docling, PostgreSQL, schema
 
 **Global Docs Location:** `

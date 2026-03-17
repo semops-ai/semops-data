@@ -3,8 +3,8 @@
 > **Repo:** `semops-data`
 > **Role:** Analytics/MLOps
 > **Status:** ACTIVE
-> **Version:** 1.4.0
-> **Last Updated:** 2026-02-23
+> **Version:** 1.4.1
+> **Last Updated:** 2026-03-03
 > **Infrastructure:** [INFRASTRUCTURE.md](INFRASTRUCTURE.md)
 
 ---
@@ -13,7 +13,7 @@
 
 Analytics platform, coherence scoring, and data utilities — the data engineering and data science hub within the SemOps ecosystem.
 
-**Key distinction:** This repo owns *data utilities, coherence scoring, and simulation*. `semops-core` owns *schema and knowledge model*. Research RAG and data due diligence were extracted to [semops-research](https://github.com/semops-ai/semops-research) via [#50](https://github.com/semops-ai/semops-data/issues/50).
+**Key distinction:** This repo owns *data utilities, coherence scoring, and simulation*. `semops-core` owns *schema and knowledge model*. Research RAG and data due diligence were extracted to [semops-research](https://github.com/semops-ai/semops-research) via .
 
 ## DDD Classification
 
@@ -33,7 +33,8 @@ Analytics platform, coherence scoring, and data utilities — the data engineeri
 | Capability | Status | Description |
 |------------|--------|-------------|
 | Coherence Scoring | in_progress | MLflow-tracked experiments measuring semantic drift (SC formula) |
-| Synthesis and Simulation | draft | Synthetic data generation (SDV, Faker), stack simulation, data profiling |
+| Synthesis and Simulation | in_progress | Synthetic data generation (SDV, MOSTLY AI, Faker), stack simulation, data profiling |
+| Agentic Data Science | in_progress | Data science tooling for profiling, modeling, and RLHF-aligned data workflows |
 | Agentic Lineage | planned | Episode-centric provenance tracking (shared with semops-core) |
 | Scale Projection | in_progress | Cross-cutting: HITL-to-ML progression via data engineering scenarios |
 
@@ -56,7 +57,7 @@ What this repo does NOT own (consumed from elsewhere):
 
 - Schema and knowledge model (semops-core)
 - Infrastructure services: Qdrant, Docling, PostgreSQL, Ollama (semops-core)
-- Research RAG, data due diligence (semops-research — extracted via #50)
+- Research RAG, data due diligence (semops-research — extracted via )
 
 **Ubiquitous Language conformance:** This repo follows definitions in [UBIQUITOUS_LANGUAGE.md](https://github.com/semops-ai/semops-core/blob/main/schemas/UBIQUITOUS_LANGUAGE.md). Domain terms used in code and docs must match.
 
@@ -66,12 +67,12 @@ What this repo does NOT own (consumed from elsewhere):
 
 ```text
 src/data_systems_toolkit/
-├── core/ # Config, logging utilities
-├── coherence/ # Coherence scoring (SC formula, MLflow experiments)
-├── synthetic/ # Data generators (e-commerce, analytics)
-├── profiling/ # Data profiling tools
-├── simulation/ # Stack simulation logic (planned)
-└── lineage/ # Lineage tracking (planned)
+├── core/               # Config, logging utilities
+├── coherence/          # Coherence scoring (SC formula, MLflow experiments)
+├── synthetic/          # Data generators (e-commerce, analytics)
+├── profiling/          # Data profiling tools
+├── simulation/         # Stack simulation logic (planned)
+└── lineage/            # Lineage tracking (planned)
 ```
 
 ### Scripts
@@ -92,6 +93,7 @@ src/data_systems_toolkit/
 | Component | Purpose |
 |-----------|---------|
 | `.devcontainer/` | GPU-enabled DevContainer (PyTorch CUDA 12.1) |
+| `configs/synthetic/` | Template dataset configs (single-table, multi-table) for synthetic data lab |
 | `data/` | Working datasets (gitignored) |
 | `mlruns/` | MLflow experiment tracking (gitignored) |
 | `samples/` | Canonical pipeline examples |

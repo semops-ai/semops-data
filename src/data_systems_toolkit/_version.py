@@ -2,24 +2,24 @@
 # don't change, don't track in version control
 
 __all__ = [
- "__version__",
- "__version_tuple__",
- "version",
- "version_tuple",
- "__commit_id__",
- "commit_id",
+    "__version__",
+    "__version_tuple__",
+    "version",
+    "version_tuple",
+    "__commit_id__",
+    "commit_id",
 ]
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
- from typing import Tuple
- from typing import Union
+    from typing import Tuple
+    from typing import Union
 
- VERSION_TUPLE = Tuple[Union[int, str], ...]
- COMMIT_ID = Union[str, None]
+    VERSION_TUPLE = Tuple[Union[int, str], ...]
+    COMMIT_ID = Union[str, None]
 else:
- VERSION_TUPLE = object
- COMMIT_ID = object
+    VERSION_TUPLE = object
+    COMMIT_ID = object
 
 version: str
 __version__: str

@@ -2,7 +2,7 @@
 
 > **Status:** In Progress
 > **Date:** 2026-01-30
-> **Related Issue:** [](https://github.com/semops-ai/semops-data/issues/38)
+> **Related Issue:** 
 > **Related ADR:** [ADR-0005 (semops-dx-orchestrator)](https://github.com/semops-ai/semops-dx-orchestrator) — Phase D drift measurement strategy
 
 ## Executive Summary
@@ -71,7 +71,7 @@ Thresholds for "drift detected" will be determined empirically via the MLflow ex
 
 ### Negative
 
-- Depends on (corpus-aware routing) for full context
+- Depends on  (corpus-aware routing) for full context
 - Stability component requires temporal data that may not exist yet
 - Multiple experiment variants add maintenance surface
 
@@ -91,7 +91,7 @@ Thresholds for "drift detected" will be determined empirically via the MLflow ex
 
 ## Session Log
 
-- 2026-01-30: ADR created, issue #38 assigned
+- 2026-01-30: ADR created, issue  assigned
 - 2026-01-30: Technology choices confirmed (nomic-embed-text, DeBERTa-v3-base, Claude judge)
 - 2026-01-30: MVP implemented — v1-embedding + v2-nli experiments, CLI, tests, user guide
 
@@ -99,6 +99,6 @@ Thresholds for "drift detected" will be determined empirically via the MLflow ex
 
 - GLOBAL_ARCHITECTURE.proposed.md PD-4
 - ADR-0005 §Drift Strategy (semops-dx-orchestrator)
-- (Phase D)
-- (episode provenance)
-- (corpus-aware routing)
+-  (Phase D)
+-  (episode provenance)
+-  (corpus-aware routing)

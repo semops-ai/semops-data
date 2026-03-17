@@ -99,7 +99,7 @@ loader = DataLoader(dataset, batch_size=16)
 # Use mixed precision
 from torch.cuda.amp import autocast
 with autocast:
- outputs = model(inputs)
+    outputs = model(inputs)
 ```
 
 ### Issue: Port already in use
@@ -141,13 +141,13 @@ docker logs $(docker ps -aq --filter "ancestor=vsc-semops-data*" | head -1)
 ### Directory Structure
 
 ```text
-data/ # Working datasets (gitignored)
-├── raw/ # Original downloads - never modify
-├── processed/ # Cleaned, ready for modeling
-└── interim/ # Intermediate processing
+data/           # Working datasets (gitignored)
+├── raw/        # Original downloads - never modify
+├── processed/  # Cleaned, ready for modeling
+└── interim/    # Intermediate processing
 
-mlruns/ # MLflow tracking (gitignored)
-samples/ # Canonical examples (committed)
+mlruns/         # MLflow tracking (gitignored)
+samples/        # Canonical examples (committed)
 ```
 
 ### Data Conventions
@@ -196,8 +196,8 @@ pip install -e ".[mlops]"
 
 ```bash
 # .env (optional, gitignored)
-SUPABASE_URL=... # Future: semops-core integration
-ANTHROPIC_API_KEY=... # Future: LLM integration
+SUPABASE_URL=...           # Future: semops-core integration
+ANTHROPIC_API_KEY=...      # Future: LLM integration
 ```
 
 ## Related Documentation

@@ -4,7 +4,7 @@
 > **Owner:** This repo owns and operates these services
 > **Status:** ACTIVE
 > **Version:** 1.3.0
-> **Last Updated:** 2026-02-23
+> **Last Updated:** 2026-03-03
 
 ---
 
@@ -107,6 +107,8 @@ How this repo connects to shared infrastructure:
 | `numpy` | Numerical computing | — |
 | `sdv` | Synthetic data generation | — |
 | `faker` | Fake data generation | — |
+| `mostlyai-mock` | Schema-driven mock data (no training needed) | — |
+| `mostlyai-qa` | Automated HTML fidelity + privacy QA reports | — |
 | `duckdb` | Local analytics engine | — |
 | `sqlalchemy` | Database abstraction | semops |
 | `pydantic` | Settings and data models | semops, publisher |
@@ -128,6 +130,7 @@ How this repo connects to shared infrastructure:
 | `openlineage-python` + `marquez-python` | `lineage` | Lineage standard — traces to Agentic Lineage capability |
 | `mlflow` | `mlops` | Experiment tracking for coherence scoring |
 | `sentence-transformers` + `torch` | `coherence` | Embedding models for SC formula |
+| `mostlyai[local]` | `synthetic-data` | MOSTLY AI local training (TabularARGN); use `mostlyai[local-gpu]` in DevContainer |
 
 ### Setup
 
