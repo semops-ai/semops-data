@@ -1,0 +1,119 @@
+# Source Configuration for SemOps Framework Documentation
+# $schema: source_config_v2
+#
+# Framework source material (concept entities) from publisher-pr.
+# Originally ingested via docs-pr.yaml (now retired) before LLM classification
+# was added to the pipeline. This config replaces docs-pr.yaml with updated
+# paths reflecting the docs-pr → publisher-pr merge.
+#
+# See:  (backfill LLM metadata for concept entities)
+#
+# DEDUP NOTE: domain-driven-design.md produces slug 'domain-driven-design'
+# which is an alt_label of pattern 'ddd'. After ingestion, dedup this entity
+# into 'ddd' (merge chunks, delete duplicate). A proper id_alias mechanism
+# would prevent this — see entity_builder.derive_entity_id.
+
+source_id: github-framework-docs
+surface_id: github-semops-ai
+name: "SemOps Framework Docs (publisher-pr/docs/source/semops-framework)"
+
+github:
+  owner: semops-ai
+  repo: publisher-pr
+  branch: main
+  base_path: "docs/source/semops-framework"
+  include_directories:
+    - SEMANTIC_OPERATIONS_FRAMEWORK
+    - RESEARCH
+  exclude_patterns:
+    - "**/README-old.md"
+    - "**/WIP-*"
+    - "**/drafts/**"
+  file_extensions:
+    - .md
+
+# Processing contract (DD-0001 §Source-Defined Processing)
+processing:
+  chunking: document_structure
+  embedding: default
+  entity_recognition: manifest
+  relation_extraction: deterministic+llm
+  llm_enrichment: true
+
+# Default values applied to all entities from this source
+defaults:
+  asset_type: file
+  version: "1.0"
+
+# Attribution template for all entities
+attribution:
+  $schema: attribution_v2
+  creator:
+    - Tim Mitchell
+  rights: CC-BY-4.0
+  organization: SemOps.ai
+  platform: github
+  channel: github.com/semops-ai
+  epistemic_status: synthesis
+
+# LLM classification configuration
+llm_classify:
+  enabled: true
+  model: claude-opus-4-5-20251101
+  fields:
+    - concept_ownership
+    - content_type
+    - primary_concept
+    - broader_concepts
+    - narrower_concepts
+    - subject_area
+    - summary
+
+# Corpus routing: map file paths to corpus + content_type (ADR-0005)
+# Rules are evaluated in order; first match wins.
+# Paths are matched as: base_path + "/" + repo_relative_path
+corpus_routing:
+  rules:
+    - path_pattern: "docs/source/semops-framework/RESEARCH/FOUNDATIONS/**"
+      corpus: core_kb
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary, subject_area, primary_concept]
+        expected_fields: [concept_ownership, detected_edges, broader_concepts, narrower_concepts]
+    - path_pattern: "docs/source/semops-framework/RESEARCH/CURRENT_CONTEXT/AI_TRANSFORMATION/**"
+      corpus: research_ai
+      content_type: documentation
+      lifecycle_stage: draft
+      metadata_contract:
+        required_fields: [summary]
+        expected_fields: [subject_area, primary_concept, concept_ownership]
+    - path_pattern: "docs/source/semops-framework/SEMANTIC_OPERATIONS_FRAMEWORK/EXPLICIT_ARCHITECTURE/**"
+      corpus: core_kb
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary, subject_area, primary_concept]
+        expected_fields: [concept_ownership, detected_edges, broader_concepts, narrower_concepts]
+    - path_pattern: "docs/source/semops-framework/SEMANTIC_OPERATIONS_FRAMEWORK/SEMANTIC_OPTIMIZATION/**"
+      corpus: core_kb
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary, subject_area, primary_concept]
+        expected_fields: [concept_ownership, detected_edges, broader_concepts, narrower_concepts]
+    - path_pattern: "docs/source/semops-framework/SEMANTIC_OPERATIONS_FRAMEWORK/STRATEGIC_DATA/**"
+      corpus: core_kb
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary, subject_area, primary_concept]
+        expected_fields: [concept_ownership, detected_edges, broader_concepts, narrower_concepts]
+    - path_pattern: "docs/source/semops-framework/SEMANTIC_OPERATIONS_FRAMEWORK/**"
+      corpus: core_kb
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary, subject_area, primary_concept]
+        expected_fields: [concept_ownership, detected_edges, broader_concepts, narrower_concepts]
+  default_corpus: core_kb
+  default_content_type: documentation
+  default_lifecycle_stage: active
+  default_metadata_contract:
+    required_fields: [summary, subject_area, primary_concept]
+    expected_fields: [concept_ownership, detected_edges, broader_concepts, narrower_concepts]

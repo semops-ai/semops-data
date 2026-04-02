@@ -1,0 +1,68 @@
+# Source Configuration for docs-pr deployment artifacts (ADRs, session notes)
+# $schema: source_config_v1
+
+source_id: github-docs-pr-deployment
+surface_id: github-timjmitchell
+name: "Documents Deployment Artifacts (docs-pr)"
+
+github:
+  owner: timjmitchell
+  repo: docs-pr
+  branch: main
+  base_path: ""
+  include_directories:
+    - docs/decisions
+    - docs/session-notes
+  exclude_patterns:
+    - "**/TEMPLATE.md"
+    - "**/README.md"
+  file_extensions:
+    - .md
+
+defaults:
+  asset_type: file
+  version: "1.0"
+
+attribution:
+  $schema: attribution_v2
+  creator:
+    - Tim Mitchell
+  rights: CC-BY-4.0
+  organization: TJMConsulting
+  platform: github
+  channel: timjmitchell
+  epistemic_status: synthesis
+
+llm_classify:
+  enabled: true
+  model: claude-opus-4-5-20251101
+  fields:
+    - concept_ownership
+    - content_type
+    - primary_concept
+    - broader_concepts
+    - narrower_concepts
+    - subject_area
+    - summary
+
+corpus_routing:
+  rules:
+    - path_pattern: "**/archive/**"
+      corpus: deployment
+      content_type: adr
+      lifecycle_stage: deprecated
+    - path_pattern: "docs/decisions/ISSUE-*"
+      corpus: deployment
+      content_type: session_note
+    - path_pattern: "docs/decisions/ADR-*"
+      corpus: deployment
+      content_type: adr
+    - path_pattern: "docs/decisions/**"
+      corpus: deployment
+      content_type: adr
+    - path_pattern: "docs/session-notes/**"
+      corpus: deployment
+      content_type: session_note
+  default_corpus: deployment
+  default_content_type: session_note
+  default_lifecycle_stage: active

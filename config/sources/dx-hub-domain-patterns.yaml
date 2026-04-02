@@ -1,0 +1,81 @@
+# Source Configuration for semops-orchestrator domain patterns
+# $schema: source_config_v2
+
+source_id: github-dx-hub-domain-patterns
+surface_id: github-semops-ai
+name: "Domain Patterns (semops-orchestrator)"
+
+github:
+  owner: semops-ai
+  repo: semops-orchestrator
+  branch: main
+  base_path: docs/patterns
+  include_directories: []
+  exclude_patterns:
+    - "**/_TEMPLATE.md"
+    - "**/WIP-*"
+  file_extensions:
+    - .md
+
+# Processing contract (DD-0001 §Source-Defined Processing)
+processing:
+  chunking: document_structure
+  embedding: default
+  entity_recognition: manifest
+  relation_extraction: deterministic
+  llm_enrichment: true
+
+# Default values applied to all entities from this source
+defaults:
+  asset_type: file
+  version: "1.0"
+
+# Attribution template for all entities
+attribution:
+  $schema: attribution_v2
+  creator:
+    - Tim Mitchell
+  rights: CC-BY-4.0
+  organization: TJMConsulting
+  platform: github
+  channel: semops-ai
+  epistemic_status: synthesis
+
+# LLM classification configuration
+llm_classify:
+  enabled: true
+  model: claude-opus-4-5-20251101
+  fields:
+    - concept_ownership
+    - content_type
+    - primary_concept
+    - broader_concepts
+    - narrower_concepts
+    - subject_area
+    - summary
+
+# Corpus routing: map file paths to corpus + content_type (ADR-0005)
+# All domain patterns are core_kb - these define the schema's aggregate root.
+corpus_routing:
+  rules:
+    # Lifecycle: draft/archive patterns (ingest with lifecycle_stage instead of excluding)
+    - path_pattern: "**/drafts/**"
+      corpus: core_kb
+      content_type: documentation
+      lifecycle_stage: draft
+      metadata_contract:
+        required_fields: [summary, subject_area, primary_concept]
+        expected_fields: [concept_ownership, detected_edges, broader_concepts, narrower_concepts]
+    - path_pattern: "**/_archive/**"
+      corpus: core_kb
+      content_type: documentation
+      lifecycle_stage: deprecated
+      metadata_contract:
+        required_fields: []
+        expected_fields: []
+  default_corpus: core_kb
+  default_content_type: documentation
+  default_lifecycle_stage: active
+  default_metadata_contract:
+    required_fields: [summary, subject_area, primary_concept]
+    expected_fields: [concept_ownership, detected_edges, broader_concepts, narrower_concepts]

@@ -1,0 +1,790 @@
+version: '3.0'
+generated_at: '2026-03-22T01:07:57.095083+00:00'
+description: Framework docs pattern coverage (documentation entities, post-dedup)
+total_entities: 53
+linked: 51
+unlinked: 2
+entities:
+  agentic-coding-at-scale:
+    title: Agentic Coding at Scale
+    content_type: documentation
+    pattern_count: 6
+    patterns:
+    - ddd
+    - explicit-architecture
+    - explicit-enterprise
+    - semantic-coherence
+    - semantic-operations
+    - stable-core-flexible-edge
+    edges_by_predicate:
+      documents:
+      - ddd
+      - semantic-operations
+      related_to:
+      - explicit-architecture
+      - explicit-enterprise
+      - semantic-coherence
+      - stable-core-flexible-edge
+  ai-ready-architecture:
+    title: AI-Ready Architecture
+    content_type: documentation
+    pattern_count: 2
+    patterns:
+    - ddd
+    - explicit-architecture
+    edges_by_predicate:
+      documents:
+      - ddd
+      related_to:
+      - ddd
+      - explicit-architecture
+  analytics-systems-evolution:
+    title: Evolution of Analytics Data Systems
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - agentic-rag
+    - data-modeling
+    - data-profiling
+    - governance-as-strategy
+    edges_by_predicate:
+      related_to:
+      - agentic-rag
+      - data-modeling
+      - data-profiling
+      - governance-as-strategy
+      documents:
+      - data-modeling
+  bizbok-ddd-overlay:
+    title: 'BIZBOK → DDD Overlay: Financial Services Worked Example'
+    content_type: documentation
+    pattern_count: 1
+    patterns:
+    - ddd
+    edges_by_predicate:
+      documents:
+      - ddd
+      related_to:
+      - ddd
+  business-analytics-patterns:
+    title: Business Analytics Patterns
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - data-modeling
+    - etl
+    - surface-analysis
+    edges_by_predicate:
+      related_to:
+      - data-modeling
+      - etl
+      - surface-analysis
+      documents:
+      - data-modeling
+  data-collection-el-methods:
+    title: 'Data Collection & EL Methods: A Comprehensive Guide'
+    content_type: documentation
+    pattern_count: 0
+    patterns: null
+  data-engineering-core-framework:
+    title: Data Engineering Core Framework
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - fundamentals-of-data-engineering
+    - governance-as-strategy
+    - medallion-architecture
+    edges_by_predicate:
+      documents:
+      - fundamentals-of-data-engineering
+      related_to:
+      - governance-as-strategy
+      - medallion-architecture
+  data-is-organizational-challenge:
+    title: Data Is an Organizational Challenge
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - data-modeling
+    - data-system-classification
+    - ddd
+    edges_by_predicate:
+      related_to:
+      - data-modeling
+      - data-system-classification
+      - ddd
+      documents:
+      - data-system-classification
+  data-roles-evolution:
+    title: Evolution of Data Roles
+    content_type: documentation
+    pattern_count: 1
+    patterns:
+    - data-modeling
+    edges_by_predicate:
+      related_to:
+      - data-modeling
+  data-shapes:
+    title: Data Shape
+    content_type: documentation
+    pattern_count: 5
+    patterns:
+    - prov-o
+    - provenance-first-design
+    - semantic-operations
+    - shape
+    - stable-core-flexible-edge
+    edges_by_predicate:
+      related_to:
+      - prov-o
+      - provenance-first-design
+      - semantic-operations
+      - stable-core-flexible-edge
+      documents:
+      - prov-o
+      - shape
+  data-silos:
+    title: Data Silos Explained
+    content_type: documentation
+    pattern_count: 6
+    patterns:
+    - data-system-classification
+    - ddd
+    - governance-as-strategy
+    - semantic-coherence
+    - strategic-data
+    - surface-analysis
+    edges_by_predicate:
+      related_to:
+      - data-system-classification
+      - governance-as-strategy
+      - semantic-coherence
+      - strategic-data
+      - surface-analysis
+      documents:
+      - ddd
+      - strategic-data
+      - surface-analysis
+  data-system-classification:
+    title: Data System Classification
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - ddd
+    - semantic-coherence
+    - semantic-operations
+    edges_by_predicate:
+      documents:
+      - ddd
+      related_to:
+      - semantic-coherence
+      - semantic-operations
+  data-system-classification-ddd-validation:
+    title: 'Data System Classification: DDD Validation'
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - data-modeling
+    - data-system-classification
+    - dbt
+    - ddd
+    edges_by_predicate:
+      documents:
+      - data-modeling
+      - data-system-classification
+      - dbt
+      - ddd
+      related_to:
+      - ddd
+  data-systems-architecture-map:
+    title: Data Systems & Domain Architecture Map
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - data-system-classification
+    - ddd
+    - surface-analysis
+    edges_by_predicate:
+      documents:
+      - data-system-classification
+      - ddd
+      - surface-analysis
+      related_to:
+      - ddd
+  data-systems-essentials:
+    title: Analytics Data Systems Essentials
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - data-system-classification
+    - fundamentals-of-data-engineering
+    - surface-analysis
+    edges_by_predicate:
+      documents:
+      - data-system-classification
+      - fundamentals-of-data-engineering
+      related_to:
+      - surface-analysis
+  ddd-acl-governance-aas:
+    title: Anti-Corruption Layer (ACL)
+    content_type: documentation
+    pattern_count: 2
+    patterns:
+    - ddd
+    - semantic-coherence
+    edges_by_predicate:
+      related_to:
+      - ddd
+      - semantic-coherence
+      documents:
+      - ddd
+  ddd-data-architecture:
+    title: Data Architecture Through the DDD Lens
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - data-modeling
+    - dbt
+    - ddd
+    edges_by_predicate:
+      related_to:
+      - data-modeling
+      documents:
+      - dbt
+      - ddd
+  ddd-solves-ai-transformation:
+    title: Domain-Driven Design Solves the AI Transformation Problem
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - ddd
+    - governance-as-strategy
+    - semantic-coherence
+    - stable-core-flexible-edge
+    edges_by_predicate:
+      documents:
+      - ddd
+      related_to:
+      - ddd
+      - governance-as-strategy
+      - semantic-coherence
+      - stable-core-flexible-edge
+  dikw-theory-comparison:
+    title: DIKW Theory Comparison
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - pattern-language
+    - semantic-funnel
+    - semantic-operations
+    edges_by_predicate:
+      documents:
+      - pattern-language
+      - semantic-funnel
+      - semantic-operations
+      related_to:
+      - semantic-funnel
+      - semantic-operations
+  discovery-through-data:
+    title: Discovery Through Data
+    content_type: documentation
+    pattern_count: 2
+    patterns:
+    - agentic-lineage
+    - ddd
+    edges_by_predicate:
+      related_to:
+      - agentic-lineage
+      documents:
+      - ddd
+  everything-is-data:
+    title: Everything is Data
+    content_type: documentation
+    pattern_count: 5
+    patterns:
+    - data-system-classification
+    - ddd
+    - semantic-coherence
+    - semantic-operations
+    - strategic-data
+    edges_by_predicate:
+      related_to:
+      - data-system-classification
+      - ddd
+      - semantic-coherence
+      - semantic-operations
+      documents:
+      - strategic-data
+  explicit-architecture:
+    title: Explicit Architecture
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - ddd
+    - semantic-funnel
+    - strategic-data
+    edges_by_predicate:
+      documents:
+      - ddd
+      - semantic-funnel
+      related_to:
+      - ddd
+      - strategic-data
+  explicit-enterprise:
+    title: Explicit Enterprise
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - data-system-classification
+    - ddd
+    - governance-as-strategy
+    - semantic-coherence
+    edges_by_predicate:
+      related_to:
+      - data-system-classification
+      - governance-as-strategy
+      - semantic-coherence
+      documents:
+      - ddd
+  foundations:
+    title: this doc is a fairly straight ahead structure doc that's synthesizing 3p concepts - reviewed and merged content
+      from semantic-foundations.md and hub-first-principles.md (now deleted)
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - ddd
+    - pattern-language
+    - semantic-coherence
+    edges_by_predicate:
+      documents:
+      - ddd
+      - pattern-language
+      related_to:
+      - semantic-coherence
+  foundations-cognition:
+    title: 'Foundations: Human Cognition and Organization'
+    content_type: documentation
+    pattern_count: 1
+    patterns:
+    - semantic-coherence
+    edges_by_predicate:
+      related_to:
+      - semantic-coherence
+  foundations-data:
+    title: 'Foundations: Data Systems'
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - dama-dmbok
+    - data-modeling
+    - prov-o
+    edges_by_predicate:
+      documents:
+      - dama-dmbok
+      - data-modeling
+      - prov-o
+  foundations-semantic:
+    title: 'Foundations: Semantic Systems and Architecture'
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - semantic-coherence
+    - semantic-funnel
+    - skos
+    edges_by_predicate:
+      related_to:
+      - semantic-coherence
+      - semantic-funnel
+      - skos
+      documents:
+      - semantic-coherence
+      - semantic-funnel
+  four-data-system-types:
+    title: The Four Data System Types
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - ddd
+    - semantic-coherence
+    - semantic-operations
+    edges_by_predicate:
+      documents:
+      - ddd
+      - semantic-operations
+      related_to:
+      - ddd
+      - semantic-coherence
+  four-data-system-types-ddd-validation:
+    title: 'Four Data System Types: DDD Validation'
+    content_type: documentation
+    pattern_count: 0
+    patterns: null
+  governance-as-strategy:
+    title: Governance as Strategy
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - data-profiling
+    - governance-as-strategy
+    - prov-o
+    edges_by_predicate:
+      documents:
+      - data-profiling
+      - governance-as-strategy
+      - prov-o
+  pattern-operations:
+    title: Pattern Operations
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - ddd
+    - semantic-coherence
+    - semantic-operations
+    edges_by_predicate:
+      related_to:
+      - ddd
+      - semantic-coherence
+      - semantic-operations
+      documents:
+      - semantic-operations
+  patterns:
+    title: Patterns
+    content_type: documentation
+    pattern_count: 5
+    patterns:
+    - ddd
+    - explicit-architecture
+    - semantic-coherence
+    - semantic-funnel
+    - semantic-operations
+    edges_by_predicate:
+      documents:
+      - ddd
+      related_to:
+      - explicit-architecture
+      - semantic-coherence
+      - semantic-funnel
+      - semantic-operations
+  patterns-and-bounded-contexts:
+    title: Patterns and Bounded Contexts
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - ddd
+    - semantic-coherence
+    - semantic-drift
+    - semantic-operations
+    edges_by_predicate:
+      documents:
+      - ddd
+      - semantic-operations
+      related_to:
+      - semantic-coherence
+      - semantic-drift
+      - semantic-operations
+  physics-of-data:
+    title: The Physics of Data
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - data-modeling
+    - semantic-funnel
+    - shape
+    edges_by_predicate:
+      related_to:
+      - data-modeling
+      - shape
+      documents:
+      - semantic-funnel
+  semantic-coherence:
+    title: Semantic Coherence
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - ddd
+    - semantic-drift
+    - semantic-funnel
+    - semantic-operations
+    edges_by_predicate:
+      related_to:
+      - ddd
+      - semantic-drift
+      documents:
+      - semantic-funnel
+      - semantic-operations
+  semantic-coherence-measurement:
+    title: Semantic Coherence Measurement
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - data-catalog
+    - data-lineage
+    - ddd
+    - semantic-coherence
+    edges_by_predicate:
+      related_to:
+      - data-catalog
+      - data-lineage
+      - ddd
+      documents:
+      - ddd
+      - semantic-coherence
+  semantic-compression:
+    title: Semantic Compression
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - data-modeling
+    - ddd
+    - semantic-coherence
+    edges_by_predicate:
+      related_to:
+      - data-modeling
+      - semantic-coherence
+      documents:
+      - ddd
+  semantic-flywheel:
+    title: Semantic Flywheel
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - ddd
+    - explicit-architecture
+    - semantic-coherence
+    - semantic-optimization
+    edges_by_predicate:
+      documents:
+      - ddd
+      - semantic-optimization
+      related_to:
+      - explicit-architecture
+      - semantic-coherence
+  semantic-funnel:
+    title: The Semantic Funnel
+    content_type: documentation
+    pattern_count: 2
+    patterns:
+    - pattern-language
+    - semantic-funnel
+    edges_by_predicate:
+      documents:
+      - pattern-language
+      - semantic-funnel
+  semantic-operations-framework:
+    title: Semantic Operations (SemOps) Framework
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - data-modeling
+    - ddd
+    - explicit-architecture
+    - semantic-coherence
+    edges_by_predicate:
+      related_to:
+      - data-modeling
+      - explicit-architecture
+      - semantic-coherence
+      documents:
+      - ddd
+  semantic-optimization:
+    title: Semantic Optimization
+    content_type: documentation
+    pattern_count: 5
+    patterns:
+    - ddd
+    - prov-o
+    - semantic-coherence
+    - semantic-funnel
+    - strategic-data
+    edges_by_predicate:
+      documents:
+      - ddd
+      - semantic-coherence
+      related_to:
+      - prov-o
+      - semantic-funnel
+      - strategic-data
+  semantic-optimization-implementation:
+    title: Semantic Optimization Implementation
+    content_type: documentation
+    pattern_count: 5
+    patterns:
+    - ddd
+    - prov-o
+    - semantic-coherence
+    - semantic-optimization
+    - skos
+    edges_by_predicate:
+      documents:
+      - ddd
+      - prov-o
+      - semantic-coherence
+      - semantic-optimization
+      - skos
+  semops-aggregate-root:
+    title: Aggregate Root for SemOps Agentic Enterprise
+    content_type: documentation
+    pattern_count: 5
+    patterns:
+    - ddd
+    - pattern-language
+    - semantic-coherence
+    - semantic-funnel
+    - semantic-operations
+    edges_by_predicate:
+      documents:
+      - ddd
+      - semantic-operations
+      related_to:
+      - ddd
+      - pattern-language
+      - semantic-coherence
+      - semantic-funnel
+  silent-analytics-failure:
+    title: Silent Analytics Failure
+    content_type: documentation
+    pattern_count: 5
+    patterns:
+    - data-lineage
+    - data-modeling
+    - data-profiling
+    - data-quality
+    - governance-as-strategy
+    edges_by_predicate:
+      related_to:
+      - data-lineage
+      - data-modeling
+      - data-profiling
+      - data-quality
+      - governance-as-strategy
+  stable-core-flexible-edge:
+    title: Stable Core, Flexible Edge
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - ddd
+    - explicit-architecture
+    - semantic-coherence
+    - shape
+    edges_by_predicate:
+      related_to:
+      - ddd
+      - explicit-architecture
+      - semantic-coherence
+      - shape
+      documents:
+      - explicit-architecture
+  strategic-data:
+    title: This structure doc needs a re-write, see inline comments. This pattern name does not have strong unique "name"
+      brand-strenght, but it is one of the FRAMEWORK pillars, and I believe it is novel enough as a synthesis of best practices.
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - ddd
+    - semantic-funnel
+    - semantic-operations
+    - surface-analysis
+    edges_by_predicate:
+      related_to:
+      - ddd
+      - semantic-operations
+      documents:
+      - semantic-funnel
+      - surface-analysis
+  surface-analysis:
+    title: Surface Analysis
+    content_type: documentation
+    pattern_count: 2
+    patterns:
+    - data-lineage
+    - ddd
+    edges_by_predicate:
+      related_to:
+      - data-lineage
+      - ddd
+  three-forces:
+    title: The Three Forces of Data Architecture
+    content_type: documentation
+    pattern_count: 2
+    patterns:
+    - data-system-classification
+    - shape
+    edges_by_predicate:
+      related_to:
+      - data-system-classification
+      - shape
+  what-is-architecture:
+    title: What is Architecture?
+    content_type: documentation
+    pattern_count: 2
+    patterns:
+    - ddd
+    - semantic-funnel
+    edges_by_predicate:
+      documents:
+      - ddd
+      related_to:
+      - semantic-funnel
+  what-is-understanding:
+    title: What is Understanding?
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - ddd
+    - pattern-language
+    - semantic-funnel
+    - strategic-data
+    edges_by_predicate:
+      related_to:
+      - ddd
+      - pattern-language
+      - strategic-data
+      documents:
+      - semantic-funnel
+  why-structure-matters:
+    title: 'Why Structure Matters: Analytics, AI'
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - data-modeling
+    - ddd
+    - semantic-drift
+    - shape
+    edges_by_predicate:
+      documents:
+      - data-modeling
+      related_to:
+      - ddd
+      - semantic-drift
+      - shape
+  wisdom-aggregate-root:
+    title: What is Wisdom?
+    content_type: documentation
+    pattern_count: 4
+    patterns:
+    - ddd
+    - pattern-language
+    - semantic-funnel
+    - semantic-operations
+    edges_by_predicate:
+      documents:
+      - ddd
+      - pattern-language
+      - semantic-funnel
+      related_to:
+      - ddd
+      - semantic-operations
+  working-with-patterns:
+    title: Working with Patterns
+    content_type: documentation
+    pattern_count: 3
+    patterns:
+    - ddd
+    - semantic-coherence
+    - skos
+    edges_by_predicate:
+      documents:
+      - ddd
+      - skos
+      related_to:
+      - semantic-coherence

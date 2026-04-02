@@ -1,0 +1,110 @@
+# Source Configuration for publisher-pr (Publishing/Content Workflow)
+# $schema: source_config_v2
+
+source_id: github-publisher-pr
+surface_id: github-semops-ai
+name: "SemOps Publisher (publisher-pr)"
+
+github:
+  owner: semops-ai
+  repo: publisher-pr
+  branch: main
+  base_path: ""
+  include_directories:
+    - posts
+    - docs
+    - style-guides
+  exclude_patterns:
+    - "**/TEMPLATE.md"
+    - "docs/resumes/**"
+    - "docs/_legacy/**"
+    - "docs/source/semops-framework/**"  # owned by framework-docs.yaml 
+    - "**/drafts/**"
+    - "**/archive/**"
+  file_extensions:
+    - .md
+
+# Processing contract (DD-0001 §Source-Defined Processing)
+processing:
+  chunking: document_structure
+  embedding: default
+  entity_recognition: manifest
+  relation_extraction: deterministic+llm
+  llm_enrichment: true
+
+# Default values applied to all entities from this source
+defaults:
+  asset_type: file
+  version: "1.0"
+
+# Attribution template for all entities
+attribution:
+  $schema: attribution_v2
+  creator:
+    - Tim Mitchell
+  rights: CC-BY-4.0
+  organization: TJMConsulting
+  platform: github
+  channel: semops-ai
+  epistemic_status: synthesis
+
+# LLM classification configuration
+llm_classify:
+  enabled: true
+  model: claude-opus-4-5-20251101
+  fields:
+    - concept_ownership
+    - content_type
+    - primary_concept
+    - broader_concepts
+    - narrower_concepts
+    - subject_area
+    - summary
+
+# Corpus routing: map file paths to corpus + content_type (ADR-0005)
+# Rules are evaluated in order; first match wins.
+corpus_routing:
+  # Publication status is determined by delivery.approval_status (pending → approved → rejected),
+  # not by directory structure. All posts route to `published` corpus; approval_status gates
+  # Delivery records and coherence tracking.
+  rules:
+    # NOTE: docs/source/semops-framework/** excluded at discovery level
+    # (owned by framework-docs.yaml source config — see )
+
+    # Publishing pipeline
+    - path_pattern: "posts/**"
+      corpus: published
+      content_type: article
+      metadata_contract:
+        required_fields: [summary, subject_area, primary_concept]
+        expected_fields: [concept_ownership, detected_edges, broader_concepts]
+    - path_pattern: "docs/decisions/**"
+      corpus: deployment
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary]
+        expected_fields: [subject_area]
+    - path_pattern: "docs/session-notes/**"
+      corpus: deployment
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary]
+        expected_fields: []
+    - path_pattern: "style-guides/**"
+      corpus: core_kb
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary, subject_area, primary_concept]
+        expected_fields: [concept_ownership, broader_concepts, narrower_concepts]
+    - path_pattern: "docs/**"
+      corpus: deployment
+      content_type: article
+      metadata_contract:
+        required_fields: [summary]
+        expected_fields: [subject_area]
+  default_corpus: deployment
+  default_content_type: article
+  default_lifecycle_stage: active
+  default_metadata_contract:
+    required_fields: [summary]
+    expected_fields: []

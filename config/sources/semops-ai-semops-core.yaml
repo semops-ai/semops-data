@@ -1,0 +1,59 @@
+# Source Configuration for semops-ai/semops-core
+# $schema: source_config_v2
+
+source_id: github-semops-ai-semops-core
+surface_id: github-semops-ai
+name: "SemOps AI — semops-core"
+
+github:
+  owner: semops-ai
+  repo: semops-core
+  branch: main
+  base_path: ""
+  include_patterns:
+    - "*README.md"
+  file_extensions:
+    - .md
+
+# Processing contract (DD-0001 §Source-Defined Processing)
+processing:
+  chunking: document_structure
+  embedding: default
+  entity_recognition: manifest
+  relation_extraction: deterministic+llm
+  llm_enrichment: true
+
+defaults:
+  asset_type: file
+  version: "1.0"
+  entity_id_prefix: "pub-"
+
+attribution:
+  $schema: attribution_v2
+  creator:
+    - Tim Mitchell
+  rights: CC-BY-4.0
+  organization: SemOps.ai
+  platform: github
+  channel: github.com/semops-ai
+  epistemic_status: synthesis
+
+llm_classify:
+  enabled: true
+  model: claude-opus-4-5-20251101
+  fields:
+    - concept_ownership
+    - content_type
+    - primary_concept
+    - broader_concepts
+    - narrower_concepts
+    - subject_area
+    - summary
+
+corpus_routing:
+  default_corpus: published
+  default_content_type: article
+  default_lifecycle_stage: active
+  default_metadata_contract:
+    required_fields: [summary, subject_area, primary_concept]
+    expected_fields: [concept_ownership, detected_edges, broader_concepts]

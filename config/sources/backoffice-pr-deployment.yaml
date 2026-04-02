@@ -1,0 +1,94 @@
+# Source Configuration for semops-backoffice deployment artifacts (ADRs, session notes)
+# $schema: source_config_v2
+
+source_id: github-semops-backoffice-deployment
+surface_id: github-semops-ai
+name: "Operations Deployment Artifacts (semops-backoffice)"
+
+github:
+  owner: semops-ai
+  repo: semops-backoffice
+  branch: main
+  base_path: ""
+  include_directories:
+    - docs/decisions
+    - docs/session-notes
+  exclude_patterns:
+    - "**/TEMPLATE.md"
+    - "**/README.md"
+  file_extensions:
+    - .md
+
+# Processing contract (DD-0001 §Source-Defined Processing)
+processing:
+  chunking: document_structure
+  embedding: default
+  entity_recognition: manifest
+  relation_extraction: deterministic
+  llm_enrichment: true
+
+defaults:
+  asset_type: file
+  version: "1.0"
+
+attribution:
+  $schema: attribution_v2
+  creator:
+    - Tim Mitchell
+  rights: CC-BY-4.0
+  organization: TJMConsulting
+  platform: github
+  channel: semops-ai
+  epistemic_status: synthesis
+
+llm_classify:
+  enabled: true
+  model: claude-opus-4-5-20251101
+  fields:
+    - concept_ownership
+    - content_type
+    - primary_concept
+    - broader_concepts
+    - narrower_concepts
+    - subject_area
+    - summary
+
+corpus_routing:
+  rules:
+    - path_pattern: "**/archive/**"
+      corpus: deployment
+      content_type: documentation
+      lifecycle_stage: deprecated
+      metadata_contract:
+        required_fields: []
+        expected_fields: []
+    - path_pattern: "docs/decisions/ISSUE-*"
+      corpus: deployment
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary]
+        expected_fields: [subject_area]
+    - path_pattern: "docs/decisions/ADR-*"
+      corpus: deployment
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary]
+        expected_fields: [subject_area]
+    - path_pattern: "docs/decisions/**"
+      corpus: deployment
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary]
+        expected_fields: [subject_area]
+    - path_pattern: "docs/session-notes/**"
+      corpus: deployment
+      content_type: documentation
+      metadata_contract:
+        required_fields: [summary]
+        expected_fields: []
+  default_corpus: deployment
+  default_content_type: documentation
+  default_lifecycle_stage: active
+  default_metadata_contract:
+    required_fields: [summary]
+    expected_fields: []

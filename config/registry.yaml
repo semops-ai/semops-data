@@ -1,0 +1,1396 @@
+$schema: registry_v1
+capabilities:
+  core:
+    acquisition:
+    - id: corpus-meta-analysis
+      name: Corpus Meta-Analysis
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - semantic-ingestion
+      - raptor
+      - agentic-rag
+      delivered_by:
+      - semops-research
+      projects:
+      - P24
+      - P35
+      governance:
+        issue: null
+        criteria: Active corpus analysis pipeline with embedding generation
+    # data-due-diligence decomposed per  (2026-03-24) into:
+    #   data-system-mix (classification), gap-analysis (predicted vs detected),
+    #   process-cataloging (apqc-pcf), system-due-diligence (dcam, planned)
+    - id: data-system-mix
+      name: Data System Mix Classification
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - data-system-classification
+      - business-domain
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: null
+        criteria: Company classification by business model, industry, and predicted system mix (app/analytics/work/record %)
+    - id: gap-analysis
+      name: Gap Analysis
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - togaf
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: null
+        criteria: Predicted architecture vs detected signals — outside-in delta measurement using TOGAF ADM gap methodology
+    # TOGAF foundation capabilities registered per  (2026-03-25) — reference-decomposition of ADM
+    - id: architecture-scoping
+      name: Architecture Scoping
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - togaf
+      delivered_by:
+      - semops-orchestrator
+      projects:
+      - P44
+      governance:
+        issue: 
+        criteria: Stakeholder alignment and scope definition for architecture work —
+          what's in, what's out, what constraints apply.
+    - id: transformation-roadmapping
+      name: Transformation Roadmapping
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - togaf
+      delivered_by:
+      - semops-orchestrator
+      projects:
+      - P44
+      governance:
+        issue: 
+        criteria: Prioritized roadmap for moving from current state to target architecture.
+          Transition architectures, sequencing, dependency ordering.
+    - id: architecture-compliance
+      name: Architecture Compliance
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - togaf
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Ensuring implementations conform to architectural intent during build.
+          Subsumed by fitness-validation per .
+    # business-architecture capability removed per  — absorbed by
+    # business-architecture 1P pattern. Sub-capabilities (value-stream-mapping,
+    # information-concept-mapping, organization-mapping) implement [bizbok] directly.
+    - id: information-systems-architecture
+      name: Information Systems Architecture
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - togaf
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Data and application architecture design. Partially covered by
+          data-modeling pattern and data-pr implementation.
+    - id: technology-architecture
+      name: Technology Architecture
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - togaf
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Technology infrastructure decisions and platform selection.
+          Not adopted — infrastructure choices made ad hoc.
+    - id: architecture-change-management
+      name: Architecture Change Management
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - togaf
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Ongoing management of architecture changes over time.
+          Covered by pattern-governance lifecycle management.
+    - id: architecture-repository
+      name: Architecture Repository
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - togaf
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Structured repository of architecture artifacts, reference library,
+          governance log. Covered by pattern-registry and repos.yaml.
+    # reference-architecture-generation dissolved per  — pattern-level
+    # concept becomes business-architecture 1P pattern; artifact-level work becomes
+    # reference-model-prediction capability below.
+    - id: reference-model-prediction
+      name: Reference Model Prediction
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - business-architecture
+      - bizbok
+      - data-system-classification
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: 5-layer entity prediction stack producing reference-model.yaml.
+          Lookups across BIZBOK industry models, APQC, DCAM, DAMA, business model
+          catalogs, and product domain entities.
+    - id: business-model-synthesis
+      name: Business Model Synthesis
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - business-architecture
+      - data-system-classification
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Investment thesis, domain typing (CORE/SUPPORTING/GENERIC with
+          economic justification), cross-domain pattern resolution, and mandatory
+          merge that challenges BIZBOK boundaries. Produces business-model.yaml.
+    - id: agentic-ddd-derivation
+      name: DDD Architecture Derivation
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - busarch-ddd-derivation
+      - ddd-agent-boundary-encoding
+      - ddd
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Mechanical DDD derivation from business-model.yaml — bounded contexts,
+          aggregates, context map, domain events, sagas. Also scaffolds ARCHITECTURE.md
+          and INFRASTRUCTURE.md on first run. Produces STRATEGIC_DDD.md,
+          UBIQUITOUS_LANGUAGE.md, system-inventory.yaml, system-classification.yaml.
+    - id: value-stream-mapping
+      name: Value Stream Mapping
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - business-architecture
+      - bizbok
+      - apqc-pcf
+      delivered_by:
+      - semops-research
+      projects:
+      - P24
+      governance:
+        issue: null
+        criteria: End-to-end value streams with stage entry/exit criteria, cross-mapped to capabilities. Stages map to domain events, cross-map to saga participants.
+    - id: information-concept-mapping
+      name: Information Concept Mapping
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - business-architecture
+      - bizbok
+      - ddd
+      delivered_by:
+      - semops-research
+      projects:
+      - P24
+      governance:
+        issue: null
+        criteria: Business objects (information concepts) mapped to capabilities and value streams with state transitions. Maps to DDD entities, value objects, and state machines. Source of vertical-specific domain vocabulary.
+    - id: organization-mapping
+      name: Organization Mapping
+      status: planned
+      strategic_classification: supporting
+      implements_patterns:
+      - bizbok
+      delivered_by:
+      - semops-research
+      projects:
+      - P24
+      governance:
+        issue: null
+        criteria: Capability ownership boundaries mapped to organizational units. Identifies which teams own which bounded contexts.
+    - id: synthesis-simulation
+      name: Synthesis and Simulation
+      status: in_progress
+      strategic_classification: core
+      implements_patterns:
+      - mirror-architecture
+      - data-lineage
+      delivered_by:
+      - data-pr
+      - semops-research
+      projects:
+      - P25
+      governance:
+        issue: null
+        criteria: Scale projection simulations with data lineage tracking
+    - id: reference-catalog
+      name: Reference Catalog
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - unified-catalog
+      - backstage-software-catalog
+      - semantic-ingestion
+      - agentic-rag
+      - extract-promote
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: null
+        criteria: Unified catalog of reference architectures with semantic search
+    - id: vendor-decomposition
+      name: Vendor Decomposition
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - busarch-ddd-derivation
+      - capability-decomposition
+      - data-system-classification
+      - extract-promote
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Decomposition of vendor products into vendor-neutral primitives
+          with enterprise alternatives and lock-in assessment. Produces vendor
+          decomposition YAML with engagement mapping (build vs buy per context).
+    - id: business-model-decomposition
+      name: Business Model Decomposition
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - business-architecture
+      - capability-decomposition
+      - data-system-classification
+      - extract-promote
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Decomposition of business model archetypes into baseline capabilities
+          with strategic classification (core/supporting/generic), system mix baselines
+          (app/analytics/work/record %), and domain-specific analytics catalogs.
+          Produces archetype catalog YAMLs in data/catalogs/business-models/.
+    # ── New capabilities registered per  (2026-04-01) ──────────
+    # Artifact-anchored capabilities for business-architecture and
+    # busarch-ddd-derivation patterns.
+
+    - id: business-classification
+      name: Business Classification
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - business-architecture
+      - business-domain
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Structured classification from company inputs — industry (BIZBOK
+          operational DNA), sector (NAICS), vertical, business model weights,
+          engagement depth. Produces classification.yaml.
+    - id: schema-derivation
+      name: Schema Derivation
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - busarch-ddd-derivation
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: PostgreSQL schema per bounded context from STRATEGIC_DDD.md.
+          CORE gets full detail, SUPPORTING lighter, GENERIC references vendor schema.
+          Produces schema.sql.
+    - id: manifest-derivation
+      name: Manifest Derivation
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - busarch-ddd-derivation
+      - medallion-architecture
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Bronze/silver/gold/governance layer manifests — extraction contracts,
+          transformation rules, analytical model specs, quality/coherence config.
+          Produces medallion layer YAMLs.
+    - id: analytics-derivation
+      name: Analytics Pattern Derivation
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - busarch-ddd-derivation
+      - business-analytics-patterns
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Per-context analytics patterns — metrics, measurement methods,
+          data pipelines, feedback loops. Patterns attach to domain patterns and
+          measure context health. Produces per-context analytics pattern files.
+    - id: registry-derivation
+      name: Engagement Registry Derivation
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - busarch-ddd-derivation
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Per-engagement pattern + capability registry mapping bounded
+          contexts to domain patterns with derives_from lineage to global patterns.
+          Produces per-engagement registry.yaml.
+    - id: catalog-traceability
+      name: Catalog Traceability
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - extract-promote
+      - provenance-first-design
+      - data-lineage
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Maintains catalog-lineage.yaml in engagement repos — records which
+          shared catalog entries were consumed, created, or refreshed by each engagement.
+          Tracks provenance per-write (which engagement, which pipeline step, when),
+          evaluates staleness contextually, and preserves outside-in history as lineage
+          events rather than overwriting. Join key convention (system id) links lineage
+          to system-inventory.yaml.
+    - id: process-analysis
+      name: Process Analysis
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - busarch-ddd-derivation
+      - apqc-pcf
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Per-context process catalogs from three converging sources (APQC
+          top-down, DDD bottom-up, pattern-derived). Capability inventory with
+          cognitive load classification, executor assignment, and scale projection.
+          Produces process catalog YAMLs.
+    - id: architecture-gap-analysis
+      name: Architecture Gap Analysis
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - togaf
+      - mirror-architecture
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: TOGAF ADM gap analysis adapted for outside-in assessment. Compares
+          predicted reference architecture against observed signals to quantify
+          divergence. Consolidation of gaps from business, data, and application
+          architecture dimensions. Produces diagnosis output.
+
+    - id: code-decomposition
+      name: Code Decomposition
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - capability-decomposition
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: null
+        criteria: Decomposition of external codebases into neutral architectural primitives by reading and analyzing source
+          code.
+    - id: reference-decomposition
+      name: Reference Decomposition
+      status: in_progress
+      strategic_classification: core
+      implements_patterns:
+      - capability-decomposition
+      delivered_by:
+      - semops-orchestrator
+      projects:
+      - P44
+      governance:
+        issue: 
+        criteria: Decomposition of 3P frameworks, standards, and discipline literature into neutral,
+          single-responsibility capabilities using capability-decomposition methodology. Each
+          capability named by artifact produced, not framework jargon.
+    - id: web-signal-ingestion
+      name: Web Signal Ingestion
+      status: active
+      strategic_classification: supporting
+      implements_patterns:
+      - web-signal-collection
+      - semantic-ingestion
+      - agentic-rag
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: 
+        criteria: Domain/project-scoped signal collection from public web sources —
+          web crawling, forum pagination, content normalization, bronze layer persistence.
+          Renamed from web-signal-collection per  to disambiguate from the pattern.
+    - id: web-source-reconnaissance
+      name: Web Source Reconnaissance
+      status: active
+      strategic_classification: supporting
+      implements_patterns:
+      - web-signal-collection
+      - osint
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: 
+        criteria: Zero-footprint source reconnaissance (/recon) and active discovery
+          (/discover) producing recon-report.yaml. Robots.txt, sitemaps, tech
+          fingerprinting (server/SPA/hybrid), signal-type matching against
+          classification, shallow IA crawl, external source identification.
+    - id: web-signal-classification
+      name: Web Signal Classification
+      status: active
+      strategic_classification: supporting
+      implements_patterns:
+      - web-signal-collection
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: 
+        criteria: URL classification by signal type using vertical-specific path
+          heuristics. Maps URL patterns to signal types (pricing_page, marketing,
+          customer_voice, etc.) with confidence scores. Vertical catalogs for
+          events, services, SaaS, marketplace.
+    - id: tech-stack-profiling
+      name: Tech Stack Profiling
+      status: active
+      strategic_classification: supporting
+      implements_patterns:
+      - capability-decomposition
+      - data-system-classification
+      - osint
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: 
+        criteria: Self-hosted technology detection using MIT-licensed Wappalyzer signatures. 9 detection primitives, 3,931
+          technology signatures.
+    - id: structured-extraction
+      name: Structured Extraction
+      status: active
+      strategic_classification: supporting
+      implements_patterns:
+      - semantic-ingestion
+      - data-modeling
+      - osint
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: 
+        criteria: 3-tier extraction pipeline (regex → Ollama → Claude) with validation guardrails. Exhibitors, sponsorship,
+          tickets, demographics.
+    - id: sentiment-extraction
+      name: Sentiment Extraction
+      status: in_progress
+      strategic_classification: supporting
+      implements_patterns:
+      - semantic-ingestion
+      - osint
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: 
+        criteria: 'Forum sentiment extraction using Ollama/Mistral. Structured output: topic, entity, category, sentiment.
+          Forum chrome removal, platform-specific pagination.'
+    # OSINT foundation capabilities registered per  (2026-03-25) — reference-decomposition of intelligence cycle
+    - id: intelligence-planning
+      name: Intelligence Planning
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - osint
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Requirements definition and source identification — what signals
+          to collect, from where, for what purpose.
+    - id: intelligence-dissemination
+      name: Intelligence Dissemination
+      status: in_progress
+      strategic_classification: supporting
+      implements_patterns:
+      - osint
+      delivered_by:
+      - semops-research
+      - semops-orchestrator
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Delivering intelligence output to consumers — formatted findings,
+          actionable recommendations. Activated by customer intelligence reporting
+          in P45 outside-in pipeline, flowing through domain-pattern-discovery and
+          reference-architecture-generation.
+    - id: research
+      name: Current Research and Trends
+      status: active
+      strategic_classification: supporting
+      implements_patterns:
+      - raptor
+      - semantic-ingestion
+      delivered_by:
+      - data-pr
+      projects: []
+      governance:
+        issue: null
+        criteria: Current research and trend analysis with semantic ingestion
+    - id: autonomous-research
+      name: Autonomous Comparative Research
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - semantic-coherence
+      - seci
+      - agentic-rag
+      delivered_by:
+      - semops-research
+      - semops-orchestrator
+      projects:
+      - P40
+      governance:
+        issue: null
+        criteria: End-to-end autonomous research loop with coherence-scored output
+    - id: domain-pattern-discovery
+      name: Domain Pattern Discovery
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - capability-decomposition
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: 
+        criteria: Cross-referencing decomposition outputs (vendor, business model, vertical, process) to discover recurring structures, produce domain capability tiers, reference catalogs, and pattern candidates for registration. Renamed from pattern-discovery per  to disambiguate from analytics-pattern-discovery.
+    - id: analytics-pattern-discovery
+      name: Analytics Pattern Discovery
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - capability-decomposition
+      - dcam
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: >
+          Derive per-context analytics patterns (metrics, measurement methods,
+          data pipelines, feedback loops) from DDD architecture. Analytics
+          patterns attach to domain patterns, not business models.
+    - id: pattern-composition
+      name: Pattern Composition
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - capability-decomposition
+      delivered_by:
+      - semops-research
+      - semops-orchestrator
+      projects:
+      - P31
+      - P44
+      governance:
+        issue: 
+        criteria: >-
+          Curation and synthesis of decomposition/discovery outputs into a registerable
+          1P pattern with defined capabilities and tier classification. Produces per-capability
+          lineage mapping which 3P sources contributed to which capabilities and what was
+          deliberately excluded.
+    - id: process-cataloging
+      name: Process Cataloging
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - apqc-pcf
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: null
+        criteria: Per-bounded-context process catalogs with DDD scope, triggers, executors, and APQC classification
+    - id: data-management-due-diligence
+      name: Data Management Due Diligence
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - dcam
+      delivered_by:
+      - semops-research
+      projects:
+      - P31
+      governance:
+        issue: null
+        criteria: Inside-out data management maturity assessment using DCAM scoring methodology (governance, architecture, quality, metadata)
+    - id: entity-catalog
+      name: Entity Catalog
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - thin-index-deep-store
+      - metadata-management
+      delivered_by:
+      - semops-orchestrator
+      - semops-data
+      projects:
+      - P35
+      governance:
+        issue: 
+        criteria: Lightweight YAML index providing entity identity, classification,
+          and routing for patterns, capabilities, and design docs. Serves as the
+          local lookup layer in thin-index-deep-store — answers "exists? what type?
+          where?" without SQL/MCP round-trip.
+    - id: chunk-entity-binding
+      name: Chunk-Entity Binding
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - thin-index-deep-store
+      - retrieval-augmented-generation
+      delivered_by:
+      - semops-data
+      projects:
+      - P35
+      governance:
+        issue: 
+        criteria: Maintains a separate entity reference (from entity catalog YAML)
+          as payload metadata on vector chunks in Qdrant, enabling entity-level
+          grouping, facet filtering by domain_concepts, and provenance tracing
+          from chunk back to source entity.
+    measurement_and_memory:
+    - id: knowledge-access
+      name: Knowledge Access
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - agentic-rag
+      - tree-of-thought
+      - react-reasoning
+      - edge-predicates
+      acts_on:
+      - supabase
+      - qdrant
+      - neo4j
+      delivered_by:
+      - semops-data
+      projects:
+      - P13
+      governance:
+        issue: null
+        criteria: MCP server with semantic search, pattern lookup, and graph traversal
+    - id: coherence-scoring
+      name: Coherence Scoring
+      status: in_progress
+      strategic_classification: core
+      implements_patterns:
+      - semantic-coherence
+      - data-quality
+      - data-contracts
+      acts_on:
+      - supabase
+      delivered_by:
+      - data-pr
+      - semops-data
+      projects:
+      - P18
+      governance:
+        issue: null
+        criteria: Quantitative coherence scores on entity-pattern alignment
+    - id: semantic-corpus-management
+      name: Semantic Corpus Management
+      status: in_progress
+      strategic_classification: core
+      implements_patterns:
+      - semantic-ingestion
+      - data-quality
+      - edge-predicates
+      - shape
+      - data-contracts
+      acts_on:
+      - supabase
+      - qdrant
+      - neo4j
+      - medallion-architecture
+      delivered_by:
+      - semops-data
+      projects:
+      - P13
+      - P35
+      governance:
+        issue: null
+        criteria: Multi-corpus, multi-storage (PostgreSQL, Qdrant, Neo4j) semantic data layer. Source-config-driven ingestion with LLM classification, embedding generation, and edge detection. Every byproduct persisted as queryable data.
+    # agent-observability + operational-metrics + reasoning-lineage collapsed
+    # into lineage-telemetry per  — episode capture is the single capability;
+    # read-side capabilities may re-emerge when implementation matures.
+    - id: lineage-telemetry
+      name: Lineage Telemetry
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - agentic-lineage
+      - open-lineage
+      - episode-provenance
+      - prov-o
+      acts_on:
+      - supabase
+      - neo4j
+      delivered_by:
+      - semops-data
+      - data-pr
+      projects:
+      - P15
+      - P18
+      governance:
+        issue: 
+        criteria: Causal, bidirectional lineage with decision documents — episode capture,
+          causal graph construction. What agents did, when, why, at what cost.
+    # PROV-O foundation capabilities registered per  (2026-03-25) — reference-decomposition of W3C spec
+    - id: qualification-pattern
+      name: Qualification Pattern
+      status: included
+      strategic_classification: core
+      implements_patterns:
+      - prov-o
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Reify any provenance relationship into a first-class object with
+          role, time, and plan metadata. PROV-O's main power tool for detailed lineage.
+    - id: provenance-bundles
+      name: Provenance Bundles
+      status: included
+      strategic_classification: core
+      implements_patterns:
+      - prov-o
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Named sets of provenance statements that are themselves entities —
+          provenance-of-provenance. Who said this chain, when, can I trust it.
+    - id: plans-and-roles
+      name: Plans and Roles
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - prov-o
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Intentionality in provenance — what was the plan, what role did
+          each agent play in an activity.
+    - id: specialization-alternate
+      name: Specialization and Alternate
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - prov-o
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Versioning and multi-representation — today's page vs the page
+          in general, PDF version vs HTML version of same document.
+    - id: provenance-collections
+      name: Provenance Collections
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - prov-o
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Structured aggregation (key-entity pairs) with provenance tracking
+          on the collection itself.
+    - id: provenance-constraints
+      name: Provenance Constraints
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - prov-o
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Formal validation rules for provenance — e.g. entity can't be used
+          before generated. PROV-CONSTRAINTS spec.
+    - id: provenance-discovery
+      name: Provenance Discovery
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - prov-o
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: HTTP mechanisms (Link headers, service descriptions) for locating
+          provenance of web resources. PROV-AQ spec.
+    # pattern-governance collapsed into fitness-validation (operations) per 
+    - id: pattern-registry
+      name: Pattern Registry
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - semantic-object-pattern
+      - arc42
+      - metadata-management
+      - backstage-software-catalog
+      delivered_by:
+      - semops-data
+      - semops-orchestrator
+      projects:
+      - P39
+      governance:
+        issue: null
+        criteria: Pattern CRUD, search, documentation, and catalog management with SKOS edges
+    # domain-data-model removed per  (2026-03-18) — schema artifact, not capability
+    # pattern-management decomposed per  (2026-03-18) → pattern-governance + pattern-registry
+    # domain-reference-architecture merged into reference-architecture-generation per  (2026-03-24)
+    # DDD foundation capabilities registered per  (2026-03-25) — reference-decomposition of Evans
+    - id: domain-glossary-alignment
+      name: Domain Glossary Alignment
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - ddd
+      delivered_by:
+      - semops-data
+      - semops-orchestrator
+      projects:
+      - P39
+      governance:
+        issue: 
+        criteria: Shared domain terminology alignment across bounded contexts. Glossary curation,
+          term standardization (e.g. table-stakes→generic), vertical vocabulary alignment.
+    - id: integration-mapping
+      name: Integration Mapping
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - ddd
+      delivered_by:
+      - semops-orchestrator
+      projects:
+      - P39
+      governance:
+        issue: 
+        criteria: Integration relationship mapping between domains — upstream/downstream,
+          conformist, ACL, shared kernel decisions. Artifact is repos.yaml integration_patterns.
+    - id: strategic-priority-classification
+      name: Strategic Priority Classification
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - ddd
+      delivered_by:
+      - semops-orchestrator
+      - semops-research
+      projects:
+      - P39
+      governance:
+        issue: 
+        criteria: Core/supporting/generic classification of domains and capabilities.
+          Drives investment prioritization and build-vs-buy decisions.
+    - id: model-driven-design
+      name: Model-Driven Design
+      status: included
+      strategic_classification: core
+      implements_patterns:
+      - ddd
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Code structure mirrors domain model. The core DDD premise —
+          implementation reflects the ubiquitous language and domain concepts directly.
+    - id: supple-design
+      name: Supple Design
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - ddd
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Design principles for expressive, maintainable domain models —
+          intention-revealing interfaces, side-effect-free functions, conceptual contours.
+    - id: large-scale-structure
+      name: Large-Scale Structure
+      status: included
+      strategic_classification: supporting
+      implements_patterns:
+      - ddd
+      delivered_by: []
+      projects: []
+      governance:
+        issue: 
+        criteria: Organizing bounded contexts at system level — evolving order,
+          responsibility layers, knowledge level.
+    - id: agentic-data-science
+      name: Agentic Data Science
+      status: planned
+      strategic_classification: supporting
+      implements_patterns:
+      - data-profiling
+      - data-modeling
+      - rlhf
+      delivered_by:
+      - data-pr
+      projects:
+      - P41
+      governance:
+        issue: null
+        criteria: Agent-driven data profiling and modeling with feedback loops
+    - id: agent-training
+      name: Agent Training
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - rlhf
+      delivered_by:
+      - semops-research
+      projects:
+      - P45
+      governance:
+        issue: 
+        criteria: Extract training data from agent engagement logs — capture agent
+          reasoning, decisions, and style as structured YAML sidecars for improving
+          agent behavior.
+    operations:
+    # architecture-audit collapsed into fitness-validation per 
+    # architecture-compliance (included, TOGAF) also subsumed
+    - id: fitness-validation
+      name: Fitness Validation
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - ddd
+      - backstage-software-catalog
+      - evolutionary-architecture
+      - great-expectations
+      - data-contracts
+      delivered_by:
+      - semops-orchestrator
+      projects:
+      - P39
+      - P44
+      governance:
+        issue: 
+        criteria: Apply fitness functions (rules) to architecture, pattern, and capability
+          artifacts and produce conformance findings. Subsumes architecture-audit,
+          pattern-governance, and architecture-compliance.
+    - id: input-optimization
+      name: Input Optimization
+      status: active
+      strategic_classification: core
+      implements_patterns:
+      - semantic-ingestion
+      - explicit-enterprise
+      - semantic-object-pattern
+      delivered_by:
+      - semops-orchestrator
+      projects: []
+      governance:
+        issue: null
+        criteria: Unclassified input evaluation with pattern-based routing
+    - id: consulting-deployment
+      name: Consulting Deployment
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - ddd
+      - mirror-architecture
+      delivered_by:
+      - semops-data
+      - semops-orchestrator
+      projects:
+      - P27
+      governance:
+        issue: null
+        criteria: Capability deployment to consulting engagements via mirror architecture
+    - id: capacity-planning
+      name: Capacity Planning
+      status: planned
+      strategic_classification: supporting
+      implements_patterns:
+      - scale-projection
+      delivered_by:
+      - data-pr
+      - semops-orchestrator
+      projects:
+      - P25
+      governance:
+        issue: null
+        criteria: Infrastructure needs assessment and deployment sequencing for projected scale
+    - id: capex-planning
+      name: Capex Planning
+      status: planned
+      strategic_classification: supporting
+      implements_patterns:
+      - scale-projection
+      delivered_by:
+      - data-pr
+      - semops-orchestrator
+      projects:
+      - P25
+      governance:
+        issue: null
+        criteria: Cost and investment trajectory modeling
+    - id: architecture-validation
+      name: Architecture Validation
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - scale-projection
+      delivered_by:
+      - data-pr
+      - semops-orchestrator
+      projects:
+      - P25
+      governance:
+        issue: null
+        criteria: Validate current architecture against projected scale requirements
+    - id: vendor-evaluation
+      name: Vendor Evaluation
+      status: planned
+      strategic_classification: core
+      implements_patterns:
+      - scale-projection
+      delivered_by:
+      - data-pr
+      - semops-orchestrator
+      projects:
+      - P25
+      governance:
+        issue: null
+        criteria: Vendor and product fit assessment for projected architecture
+    orchestration:
+    - id: orchestration
+      name: Orchestration
+      status: active
+      strategic_classification: supporting
+      implements_patterns:
+      - explicit-enterprise
+      delivered_by:
+      - semops-orchestrator
+      projects:
+      - P19
+      governance:
+        issue: null
+        criteria: Cross-repo project specs, issue dispatch, and status tracking
+    - id: context-engineering
+      name: Context Engineering
+      status: active
+      strategic_classification: supporting
+      implements_patterns:
+      - explicit-enterprise
+      delivered_by:
+      - semops-orchestrator
+      projects:
+      - P19
+      governance:
+        issue: null
+        criteria: Agent priming with domain context via KB and architecture docs
+    - id: ecosystem-audit
+      name: Ecosystem Audit
+      status: active
+      strategic_classification: supporting
+      implements_patterns:
+      - explicit-enterprise
+      - ddd
+      - backstage-software-catalog
+      - data-contracts
+      delivered_by:
+      - semops-orchestrator
+      projects:
+      - P44
+      governance:
+        issue: 
+        criteria: Automated daily audit producing structured audit-state.yaml with session staleness, capability mismatches, registry consistency, pattern integrity, and orphan detection
+    - id: autonomous-execution
+      name: Autonomous Execution
+      status: in_progress
+      strategic_classification: supporting
+      implements_patterns:
+      - explicit-enterprise
+      delivered_by:
+      - semops-orchestrator
+      projects:
+      - P29
+      governance:
+        issue: null
+        criteria: Unattended agent execution with experiment isolation
+  generic:
+  - id: publishing-pipeline
+    name: Publishing Pipeline
+    status: active
+    strategic_classification: generic
+    implements_patterns:
+    - dam
+    - dublin-core
+    - cms
+    - pim
+    delivered_by:
+    - publisher-pr
+    system_type: Content Platform
+    governance:
+      issue: null
+      criteria: End-to-end content publishing from authoring through multi-channel delivery
+  - id: content-management
+    name: Content Management
+    status: active
+    strategic_classification: generic
+    implements_patterns:
+    - cms
+    - dublin-core
+    delivered_by:
+    - publisher-pr
+    system_type: Content Platform
+    governance:
+      issue: null
+      criteria: Content authoring, workflow, versioning, and metadata management
+  - id: asset-management
+    name: Asset Management
+    status: active
+    strategic_classification: generic
+    implements_patterns:
+    - dam
+    delivered_by:
+    - publisher-pr
+    system_type: Content Platform
+    governance:
+      issue: null
+      criteria: File storage, format conversion (.md → MDX/PDF), deployment to destinations
+  - id: product-information
+    name: Product Information
+    status: active
+    strategic_classification: generic
+    implements_patterns:
+    - pim
+    delivered_by:
+    - publisher-pr
+    - sites-pr
+    system_type: Content Platform
+    governance:
+      issue: null
+      criteria: Brand identity, channel routing, domain-specific assets/designs (semops.ai vs semops-ai.com)
+  - id: agentic-document-composition
+    name: Agentic Document Composition
+    status: planned
+    strategic_classification: generic
+    implements_patterns:
+    - semantic-ingestion
+    - agentic-rag
+    - zettelkasten
+    delivered_by:
+    - publisher-pr
+    system_type: Content Platform
+    governance:
+      issue: null
+      criteria: AI-assisted document composition from corpus and domain data —
+        articles, concept docs, content from pattern definitions
+  # concept-documentation collapsed into agentic-document-composition per 
+  - id: style-training
+    name: Style Training
+    status: planned
+    strategic_classification: generic
+    implements_patterns:
+    - rlhf
+    delivered_by:
+    - publisher-pr
+    system_type: Content Platform
+    governance:
+      issue: null
+      criteria: Analyze corpus to extract style rules as structured training data
+        (style-guide ruleset) for agentic-document-composition
+  - id: surface-deployment
+    name: Surface Deployment
+    status: active
+    strategic_classification: generic
+    implements_patterns:
+    - dam
+    delivered_by:
+    - sites-pr
+    system_type: Sites / Endpoints
+    governance:
+      issue: null
+      criteria: Automated deployment of content surfaces (sites, APIs)
+  - id: cap-inbox
+    name: Inbox
+    status: active
+    strategic_classification: generic
+    implements_patterns:
+    - explicit-enterprise
+    delivered_by:
+    - semops-backoffice
+    system_type: Enterprise Record
+    governance:
+      issue: null
+      criteria: Agent-addressable inbox with signal stream processing
+  - id: attention-management
+    name: Attention Management
+    status: active
+    strategic_classification: generic
+    implements_patterns:
+    - explicit-enterprise
+    delivered_by:
+    - semops-backoffice
+    system_type: Enterprise Record
+    governance:
+      issue: null
+      criteria: Task and attention management for prioritized signal processing
+  - id: financial-pipeline
+    name: Financial Pipeline
+    status: planned
+    strategic_classification: generic
+    implements_patterns:
+    - explicit-enterprise
+    delivered_by:
+    - semops-backoffice
+    system_type: Enterprise Record
+    governance:
+      issue: null
+      criteria: Automated financial data processing and reconciliation
+  - id: cap-voice-control
+    name: Voice Control
+    status: draft
+    strategic_classification: generic
+    implements_patterns:
+    - explicit-enterprise
+    delivered_by:
+    - semops-backoffice
+    system_type: Enterprise Record
+    governance:
+      issue: null
+      criteria: Voice-driven agent interaction for enterprise operations
+# Agent catalog moved to semops-orchestrator/config/agents.yaml 
+# semops-orchestrator owns agents as application layer; this registry owns capabilities and patterns.
+# Agent → capability linkage is maintained in agents.yaml via exercises_capabilities.
+agents: See semops-orchestrator/config/agents.yaml
+integrations:
+- source: semops-data
+  target: publisher-pr
+  pattern: shared-kernel
+  shared_artifact: UBIQUITOUS_LANGUAGE.md, Pattern/Entity schema
+  direction: bidirectional
+- source: semops-orchestrator
+  target: all repos
+  pattern: published-language
+  shared_artifact: GLOBAL_ARCHITECTURE.md, process docs, ADR templates
+  direction: downstream
+- source: semops-data
+  target: data-pr
+  pattern: customer-supplier
+  shared_artifact: Qdrant, Docling, Supabase services
+  direction: upstream
+- source: semops-data
+  target: semops-research
+  pattern: customer-supplier
+  shared_artifact: Ollama, Qdrant, Docling services
+  direction: upstream
+- source: semops-data
+  target: sites-pr
+  pattern: customer-supplier
+  shared_artifact: Supabase data, API access
+  direction: upstream
+- source: publisher-pr
+  target: semops-data
+  pattern: conformist
+  shared_artifact: Adopts Pattern/Entity model as-is
+  direction: downstream
+- source: semops-backoffice
+  target: semops-data
+  pattern: anti-corruption-layer
+  shared_artifact: Translates shared PostgreSQL to financial domain
+  direction: acl
+- source: publisher-pr
+  target: sites-pr
+  pattern: customer-supplier
+  shared_artifact: MDX content, resume seed.sql, fonts/templates
+  direction: bidirectional
